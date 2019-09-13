@@ -23,7 +23,7 @@
                 android:id="@+id/detalle_restaurante_nombre_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Find My Restaurant"
+                android:text="Nombre del restaurante"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
@@ -38,13 +38,22 @@
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_height="150dp"
+            android:orientation="horizontal"
             >
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/detalle_restaurante_Carusel"
+                android:layout_weight="0.7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
             </androidx.viewpager.widget.ViewPager>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/detalle_restaurante_carusel_BTN"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:background="">
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
         </LinearLayout>
 
