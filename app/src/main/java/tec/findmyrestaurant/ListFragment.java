@@ -39,7 +39,7 @@ public class ListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent intent = new Intent(getActivity(),RestaurantDetatilActivity.class);
+                Intent intent = new Intent(getActivity(),DetalleRestauranteActivity.class);
                 try {
                     intent.putExtra("restaurant",ObjectSerializer.serialize((Serializable) adapter.getItem(i)));
                 } catch (IOException e) {
@@ -63,7 +63,7 @@ public class ListFragment extends Fragment {
         res1.setName("McDondals");
         res1.setFoodType("Chatarra");
         Restaurant res2 = new Restaurant();
-        res2.setName("El chinio");
+        res2.setName("El chino");
         res2.setFoodType("Comida china");
         Restaurant res3 = new Restaurant();
         res3.setName("Donde Marta");
