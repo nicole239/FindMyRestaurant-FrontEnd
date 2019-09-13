@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetalleRestauranteActivity">
+
+    <LinearLayout
+        android:id="@+id/detalle_restaurante_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/detalle_restaurante_nombre_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Find My Restaurant"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                ></TextView>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/detalle_restaurante_layout_carusel"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="150dp"
+            >
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/detalle_restaurante_Carusel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </androidx.viewpager.widget.ViewPager>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/detalle_restaurante_layout_contenido"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <RatingBar
+                android:id="@+id/detalle_restaurante_rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+            </RatingBar>
+
+
+            <!--
+    layout_gravity: center himself on parent
+    gravity: center of childs
+    -->
+
+            <LinearLayout
+                android:id="@+id/detalle_restaurante_layout_horario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_horario_label_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="Horario: ">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_horario_contenido_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text=" Lunes: 6-7pm \n Martes: 8-9 pm">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_tipo_comida_label_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo de comida:"
+                    android:textSize="18sp"></TextView>
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_tipo_comida_contenido_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" random "
+                    android:textSize="18sp"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_precio_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Precio:"
+                    android:textSize="18sp"></TextView>
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_precio_contenido_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" random "
+                    android:textSize="18sp"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_datos_contacto_label_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Datos de contacto:"
+                    android:textSize="18sp"></TextView>
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_datos_contacto_contenido_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Telefono: \n Correo: "
+                    android:textSize="18sp"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_ubicacion_label_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ubicacion: "
+                    android:textSize="18sp"></TextView>
+
+                <TextView
+                    android:id="@+id/detalle_restaurante_ubicacion_contenido_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" hyperlink "
+                    android:textSize="18sp"></TextView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detalle_restaurante_layout_comentario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/detalle_restaurante_comentario_ET"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="Escriba su comentario">
+            </EditText>
+
+            <Button
+                android:id="@+id/detalle_restaurante_comentario_BTN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SEND"></Button>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detalle_restaurante_layout_lista_comentarios"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal">
+
+            <view class="androidx.appcompat.app.AlertController$RecycleListView"
+                android:id="@+id/detalle_restaurante_lista_comentarios_RV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </view>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
