@@ -1,4 +1,4 @@
-package tec.findmyrestaurant;
+package tec.findmyrestaurant.view;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+
+import tec.findmyrestaurant.R;
 
 
 public class TabbedActivity extends AppCompatActivity {

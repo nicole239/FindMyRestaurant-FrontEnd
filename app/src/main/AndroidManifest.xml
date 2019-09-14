@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AgregarRestauranteActivity"></activity>
-        <activity android:name=".DetalleRestauranteActivity" />
+        <activity android:name=".view.AgregarRestauranteActivity"></activity>
+        <activity android:name=".view.DetalleRestauranteActivity" />
         <activity
-            android:name=".TabbedActivity"
+            android:name=".view.TabbedActivity"
             android:label="@string/title_activity_tabbed"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".view.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package tec.findmyrestaurant;
+package tec.findmyrestaurant.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import tec.findmyrestaurant.R;
 import tec.findmyrestaurant.model.Restaurant;
 
 public class ListAdapter extends BaseAdapter {

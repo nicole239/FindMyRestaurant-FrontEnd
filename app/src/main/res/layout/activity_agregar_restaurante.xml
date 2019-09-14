@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgregarRestauranteActivity">
+    tools:context=".view.AgregarRestauranteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:background="">
+                android:background="#f00">
             </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
         </LinearLayout>

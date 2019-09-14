@@ -1,4 +1,4 @@
-package tec.findmyrestaurant;
+package tec.findmyrestaurant.view;
 
 import android.content.Context;
 import android.net.Uri;
@@ -18,6 +18,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import tec.findmyrestaurant.R;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {

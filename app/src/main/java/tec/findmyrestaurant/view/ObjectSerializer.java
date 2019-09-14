@@ -1,4 +1,4 @@
-package tec.findmyrestaurant;
+package tec.findmyrestaurant.view;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

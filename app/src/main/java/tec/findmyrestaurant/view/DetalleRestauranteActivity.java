@@ -1,4 +1,4 @@
-package tec.findmyrestaurant;
+package tec.findmyrestaurant.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import java.io.IOException;
 
+import tec.findmyrestaurant.R;
 import tec.findmyrestaurant.model.Restaurant;
 
 public class DetalleRestauranteActivity extends AppCompatActivity {

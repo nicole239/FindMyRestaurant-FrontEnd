@@ -1,8 +1,6 @@
-package tec.findmyrestaurant;
+package tec.findmyrestaurant.view;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -18,6 +16,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import tec.findmyrestaurant.R;
 import tec.findmyrestaurant.model.Restaurant;
 
 

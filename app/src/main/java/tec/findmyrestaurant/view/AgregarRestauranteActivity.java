@@ -1,8 +1,10 @@
-package tec.findmyrestaurant;
+package tec.findmyrestaurant.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import tec.findmyrestaurant.R;
 
 public class AgregarRestauranteActivity extends AppCompatActivity {
 
