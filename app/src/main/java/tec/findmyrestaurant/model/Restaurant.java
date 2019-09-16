@@ -1,16 +1,21 @@
 package tec.findmyrestaurant.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Restaurant implements Serializable {
 
+    @SerializedName("idfoodtype")
     private int idRestaurant;
     private String name;
     private float latitude;
     private float longitude;
-    private String shedule;
-    private String foodType;
+    private String schedule;
+    @SerializedName("foodtype")
+    private FoodType foodType;
+    @SerializedName("phonenumber")
     private int phoneNumber;
     private String website;
     private int price;
@@ -37,11 +42,11 @@ public class Restaurant implements Serializable {
         return longitude;
     }
 
-    public String getShedule() {
-        return shedule;
+    public String getSchedule() {
+        return schedule;
     }
 
-    public String getFoodType() {
+    public FoodType getFoodType() {
         return foodType;
     }
 
@@ -77,11 +82,11 @@ public class Restaurant implements Serializable {
         this.longitude = longitude;
     }
 
-    public void setShedule(String shedule) {
-        this.shedule = shedule;
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
     }
 
-    public void setFoodType(String foodType) {
+    public void setFoodType(FoodType foodType) {
         this.foodType = foodType;
     }
 

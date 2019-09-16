@@ -4,6 +4,7 @@ public class Message {
     private boolean auth;
     private String token;
     private String message;
+    private int id;
 
     public boolean isAuth() {
         return auth;
@@ -15,5 +16,9 @@ public class Message {
 
     public String getMessage() {
         return message;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -3,6 +3,12 @@ package tec.findmyrestaurant.api;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HeaderElement;
+import cz.msebera.android.httpclient.message.BasicHeader;
 import tec.findmyrestaurant.model.User;
 
 public class SessionManager {
@@ -19,5 +25,8 @@ public class SessionManager {
     public static String getToken(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("tec.findmyrestaurant",Context.MODE_PRIVATE);
         return sharedPreferences.getString("Token",null);
+    }
+    public static Header[] getTokenHeader(Context context){
+        return new Header[]{new BasicHeader("x-access-token",getToken(context))};
     }
 }

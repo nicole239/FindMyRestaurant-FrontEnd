@@ -54,7 +54,7 @@ public class ListAdapter extends BaseAdapter {
         txtName.setText(data.get(i).getName());
 
         TextView txtDetails = vi.findViewById(R.id.txtItemDetail);
-        txtDetails.setText(data.get(i).getFoodType());
+        txtDetails.setText(data.get(i).getFoodType().getName());
         return vi;
     }
 }

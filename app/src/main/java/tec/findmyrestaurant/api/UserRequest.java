@@ -1,29 +1,32 @@
 package tec.findmyrestaurant.api;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import tec.findmyrestaurant.model.User;
 
 public class UserRequest {
     public static void getUsers(Context context, final Response<User> userResponse){
-        HttpClient.get(context, "users", null, null, new JsonHttpResponseHandler() {
+        HttpClient.get(context, "users", null, SessionManager.getTokenHeader(context), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                userResponse.onSuccess(new ArrayList<User>());
+                Type listType = new TypeToken<List<User>>(){}.getType();
+                List<User> users = new Gson().fromJson(response.toString(),listType);
+                userResponse.onSuccess(users);
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Message message = new Gson().fromJson(errorResponse.toString(),Message.class);
@@ -31,6 +34,21 @@ public class UserRequest {
             }
         });
     }
+    public static void getUser(Context context,String email,final Response<User> userResponse){
+        HttpClient.get(context, "users/"+email, null, SessionManager.getTokenHeader(context), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                User user = new Gson().fromJson(response.toString(),User.class);
+                userResponse.onSuccess(user);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Message message = new Gson().fromJson(errorResponse.toString(),Message.class);
+                userResponse.onFailure(message);
+            }
+        });
+    }
+
     public static void authUser(Context context, User user,final  Response<User> userResponse){
         HttpClient.get(context,"users"+"/"+user.getEmail()+"/"+user.getPassword(),null,null, new JsonHttpResponseHandler(){
             @Override
@@ -38,12 +56,34 @@ public class UserRequest {
                 Message message = new Gson().fromJson(response.toString(),Message.class);
                 userResponse.onSuccess(message);
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Message message = new Gson().fromJson(errorResponse.toString(),Message.class);
                 userResponse.onFailure(message);
             }
         });
+    }
+    public void registerUser(Context context, User user, final Response<User> userResponse){
+        try {
+            StringEntity params = new StringEntity(new Gson().toJson(user));
+            HttpClient.post(context,"users",params,SessionManager.getTokenHeader(context),new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Message message = new Gson().fromJson(response.toString(),Message.class);
+                    userResponse.onSuccess(message);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Message message = new Gson().fromJson(errorResponse.toString(),Message.class);
+                    userResponse.onFailure(message);
+                }
+            });
+        }catch (Exception e){
+            Log.e("Http-error",e.getMessage());
+            Message message = new Message();
+            userResponse.onFailure(message);
+        }
+
     }
 }
