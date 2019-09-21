@@ -39,10 +39,10 @@ public class RestaurantRequest {
     public static void getRestaurant(Context context, int id,final Response<Restaurant> restaurantResponse){
         HttpClient.get(context,"restaurants/"+id,null,SessionManager.getTokenHeader(context),new JsonHttpResponseHandler(){
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Restaurant restaurant = new Gson().fromJson(response.toString(),Restaurant.class);
-                restaurantResponse.onSuccess(restaurant);
-            }
+                restaurantResponse.onSuccess(restaurant);            }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Message message = new Gson().fromJson(errorResponse.toString(),Message.class);

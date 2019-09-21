@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Restaurant implements Serializable {
 
@@ -20,7 +21,7 @@ public class Restaurant implements Serializable {
     private String website;
     private int price;
     private User usrCreator;
-    private ArrayList<String> photos;
+    private List<String> photos;
 
     public void Restaurant(){
         photos = new ArrayList<>();
@@ -106,7 +107,7 @@ public class Restaurant implements Serializable {
         this.usrCreator = usrCreator;
     }
 
-    public ArrayList<String> getPhotos() {
+    public List<String> getPhotos() {
         return photos;
     }
 
