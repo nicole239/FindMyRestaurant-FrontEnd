@@ -20,7 +20,7 @@ import tec.findmyrestaurant.model.Restaurant;
 
 public class CalificationRequest {
 
-    public void insertCalification(Context context, Calification calification, final Response<Calification> calificationResponse){
+    public static void insertCalification(Context context, Calification calification, final Response<Calification> calificationResponse){
         try {
             StringEntity params = new StringEntity(new Gson().toJson(calification));
             HttpClient.post(context,"califications",params,SessionManager.getTokenHeader(context),new JsonHttpResponseHandler(){

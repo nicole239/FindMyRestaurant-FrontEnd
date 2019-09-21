@@ -50,7 +50,7 @@ public class RestaurantRequest {
             }
         });
     }
-    public void registerRestaurant(Context context, Restaurant restaurant, final Response<Restaurant> restaurantResponse){
+    public static void registerRestaurant(Context context, Restaurant restaurant, final Response<Restaurant> restaurantResponse){
         try {
             StringEntity params = new StringEntity(new Gson().toJson(restaurant));
             HttpClient.post(context,"restaurants",params,SessionManager.getTokenHeader(context),new JsonHttpResponseHandler(){

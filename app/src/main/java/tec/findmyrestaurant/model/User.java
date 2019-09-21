@@ -6,6 +6,9 @@ public class User {
     private String password;
     private char type;
 
+    public static final char ADMIN = 'A',REGULAR='R';
+
+
     public User(){}
 
     public String getEmail() {

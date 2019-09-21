@@ -63,7 +63,7 @@ public class UserRequest {
             }
         });
     }
-    public void registerUser(Context context, User user, final Response<User> userResponse){
+    public static void registerUser(Context context, User user, final Response<User> userResponse){
         try {
             StringEntity params = new StringEntity(new Gson().toJson(user));
             HttpClient.post(context,"users",params,SessionManager.getTokenHeader(context),new JsonHttpResponseHandler(){

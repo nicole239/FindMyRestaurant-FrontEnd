@@ -6,7 +6,13 @@ public class FoodType {
 
     @SerializedName("idfoodtype")
     private int idFoodType;
+    @SerializedName("foodname")
     private String name;
+
+    public FoodType(int idFoodType, String name) {
+        this.idFoodType = idFoodType;
+        this.name = name;
+    }
 
     public int getIdfoodtype() {
         return idFoodType;

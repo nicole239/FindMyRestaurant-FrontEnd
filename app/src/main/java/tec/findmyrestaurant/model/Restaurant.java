@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Restaurant implements Serializable {
 
-    @SerializedName("idfoodtype")
+    @SerializedName("idrestaurant")
     private int idRestaurant;
     private String name;
     private float latitude;
@@ -19,9 +19,10 @@ public class Restaurant implements Serializable {
     @SerializedName("phonenumber")
     private int phoneNumber;
     private String website;
-    private int price;
+    private char price;
+    @SerializedName("user")
     private User usrCreator;
-    private List<String> photos;
+    private List<String> photos = new ArrayList<>();
 
     public void Restaurant(){
         photos = new ArrayList<>();
@@ -59,7 +60,7 @@ public class Restaurant implements Serializable {
         return website;
     }
 
-    public int getPrice() {
+    public char getPrice() {
         return price;
     }
 
@@ -99,7 +100,7 @@ public class Restaurant implements Serializable {
         this.website = website;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(char price) {
         this.price = price;
     }
 

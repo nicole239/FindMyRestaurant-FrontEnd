@@ -24,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void btnLogin_Click(View view){
-
         EditText txtEmail = findViewById(R.id.txtEmail);
         EditText txtPassword = findViewById(R.id.txtPassword);
 
@@ -46,9 +45,5 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Email or password incorrect",Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-
     }
 }

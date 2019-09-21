@@ -35,7 +35,7 @@ public class CommentRequest {
             }
         });
     }
-    public void registerComment(Context context, Comment comment, final Response<Restaurant> commentsResponse){
+    public static void registerComment(Context context, Comment comment, final Response<Restaurant> commentsResponse){
         try {
             StringEntity params = new StringEntity(new Gson().toJson(comment));
             HttpClient.post(context,"comments",params,SessionManager.getTokenHeader(context),new JsonHttpResponseHandler(){

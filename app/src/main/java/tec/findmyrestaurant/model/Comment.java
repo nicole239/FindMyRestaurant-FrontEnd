@@ -9,7 +9,7 @@ public class Comment {
     @SerializedName("idrestaurant")
     private int idRestaurant;
     private User user;
-    @SerializedName("Date")
+    //@SerializedName("Date")
     private Date date;
     private String comment;
     //private float calification;

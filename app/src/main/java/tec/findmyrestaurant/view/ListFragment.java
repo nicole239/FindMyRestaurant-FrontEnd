@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import tec.findmyrestaurant.R;
+import tec.findmyrestaurant.model.FoodType;
 import tec.findmyrestaurant.model.Restaurant;
 
 
@@ -60,13 +61,13 @@ public class ListFragment extends Fragment {
         ArrayList<Restaurant> restuarants = new ArrayList<>();
         Restaurant res1 = new Restaurant();
         res1.setName("McDondals");
-        res1.setFoodType("Chatarra");
+        res1.setFoodType(new FoodType(1,"Chatarra"));
         Restaurant res2 = new Restaurant();
         res2.setName("El chino");
-        res2.setFoodType("Comida china");
+        res2.setFoodType(new FoodType(1,"Cgina"));
         Restaurant res3 = new Restaurant();
         res3.setName("Donde Marta");
-        res3.setFoodType("Tipica");
+        res3.setFoodType(new FoodType(1,"Típica"));
 
         restuarants.add(res1);
         restuarants.add(res2);
