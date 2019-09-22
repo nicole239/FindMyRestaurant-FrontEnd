@@ -2,7 +2,9 @@ package tec.findmyrestaurant.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Calification {
+import java.io.Serializable;
+
+public class Calification implements Serializable {
     @SerializedName("idrestaurant")
     private int idRestaurant;
     private float calification;

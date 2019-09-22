@@ -11,8 +11,8 @@ public class Restaurant implements Serializable {
     @SerializedName("idrestaurant")
     private int idRestaurant;
     private String name;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private String schedule;
     @SerializedName("foodtype")
     private FoodType foodType;
@@ -23,6 +23,7 @@ public class Restaurant implements Serializable {
     @SerializedName("user")
     private User usrCreator;
     private List<String> photos = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     public void Restaurant(){
         photos = new ArrayList<>();
@@ -36,11 +37,11 @@ public class Restaurant implements Serializable {
         return name;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
@@ -76,11 +77,11 @@ public class Restaurant implements Serializable {
         this.name = name;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -118,5 +119,17 @@ public class Restaurant implements Serializable {
 
     public void addPhoto(String photo){
         photos.add(photo);
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(Comment comment){
+        this.comments.add(comment);
     }
 }

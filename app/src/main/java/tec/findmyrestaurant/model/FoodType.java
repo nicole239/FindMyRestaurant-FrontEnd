@@ -2,7 +2,9 @@ package tec.findmyrestaurant.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class FoodType {
+import java.io.Serializable;
+
+public class FoodType implements Serializable {
 
     @SerializedName("idfoodtype")
     private int idFoodType;

@@ -1,31 +1,59 @@
 package tec.findmyrestaurant.view;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import tec.findmyrestaurant.R;
+import tec.findmyrestaurant.model.FoodType;
+import tec.findmyrestaurant.model.Restaurant;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private MapView mapView;
+
+    LocationManager locationManager;
+    LocationListener locationListener;
+
+    IconGenerator iconFactory;
 
     private static final String TAG = "TabMapFragment";
 
@@ -43,18 +71,90 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
+        iconFactory = new IconGenerator(getActivity());
+
         return view;
     }
+
+    private void getPermissions() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+        else {
+            mMap.setMyLocationEnabled(true);
+            setupLocationManager();
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 10, locationListener);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //Si nos dieron permiso
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mMap.setMyLocationEnabled(true);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 1, locationListener);
+            }
+
+        }
+        //No nos dieron permiso
+        else {
+            Toast.makeText(getActivity(), "Location permission not granted, ",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void setupLocationManager() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 16));
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) { }
+            @Override
+            public void onProviderEnabled(String s) {}
+            @Override
+            public void onProviderDisabled(String s) {}
+        };
+    }
+
+    private void addRestaurantMarkers(List<Restaurant> restaurantList){
+        for(Restaurant restaurant :restaurantList){
+            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(restaurant.getLatitude(),restaurant.getLongitude()))
+                    .icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(restaurant.getName()))));
+            marker.showInfoWindow();
+            marker.setTag(restaurant);
+        }
+    }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Intent intent = new Intent(getActivity(),DetalleRestauranteActivity.class);
+                try {
+                    intent.putExtra("restaurant",ObjectSerializer.serialize((Serializable) marker.getTag()));
+                    startActivity(intent);
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+        });
+        mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
+        mMap.setOnMyLocationClickListener(onMyLocationClickListener);
+        getPermissions();
+        addRestaurantMarkers(getDummyRestaurants());
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -101,4 +201,55 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         super.onLowMemory();
         mapView.onLowMemory();
     }
+
+    private GoogleMap.OnMyLocationButtonClickListener onMyLocationButtonClickListener =
+            new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    mMap.setMinZoomPreference(15);
+                    return false;
+                }
+            };
+
+    private GoogleMap.OnMyLocationClickListener onMyLocationClickListener =
+            new GoogleMap.OnMyLocationClickListener() {
+                @Override
+                public void onMyLocationClick(@NonNull Location location) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 16));
+                }
+            };
+
+
+    private ArrayList<Restaurant> getDummyRestaurants(){
+        ArrayList<Restaurant> restuarants = new ArrayList<>();
+        Restaurant res1 = new Restaurant();
+        res1.setName("McDondals");
+        res1.setFoodType(new FoodType(1,"Chatarra"));
+        res1.setLatitude(9.9255015);
+        res1.setLongitude(-84.0240232);
+        Restaurant res2 = new Restaurant();
+        res2.setName("El chino");
+        res2.setFoodType(new FoodType(1,"Cgina"));
+        res2.setLatitude(9.925723);
+        res2.setLongitude(-84.023894);
+        Restaurant res3 = new Restaurant();
+        res3.setName("Donde Marta");
+        res3.setFoodType(new FoodType(1,"Típica"));
+        res3.setLatitude(9.927831);
+        res3.setLongitude(-84.020846);
+
+        restuarants.add(res1);
+        restuarants.add(res2);
+        restuarants.add(res3);
+
+        return restuarants;
+    }
+
+    private ArrayList<Restaurant> getRestaurants(){
+        //TODO: implement method
+        return null;
+    }
+
+
+
 }

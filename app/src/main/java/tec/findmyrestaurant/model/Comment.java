@@ -2,9 +2,10 @@ package tec.findmyrestaurant.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Comment {
+public class Comment implements Serializable {
 
     @SerializedName("idrestaurant")
     private int idRestaurant;

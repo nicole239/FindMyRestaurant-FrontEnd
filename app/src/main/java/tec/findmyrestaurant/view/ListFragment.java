@@ -17,6 +17,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import tec.findmyrestaurant.R;
+import tec.findmyrestaurant.api.Response;
+import tec.findmyrestaurant.api.RestaurantRequest;
 import tec.findmyrestaurant.model.FoodType;
 import tec.findmyrestaurant.model.Restaurant;
 
@@ -57,17 +59,25 @@ public class ListFragment extends Fragment {
         return null;
     }
 
+
+
     private ArrayList<Restaurant> getDummyRestaurants(){
         ArrayList<Restaurant> restuarants = new ArrayList<>();
         Restaurant res1 = new Restaurant();
         res1.setName("McDondals");
         res1.setFoodType(new FoodType(1,"Chatarra"));
+        res1.setLatitude(9.9255015);
+        res1.setLongitude(-84.0240232);
         Restaurant res2 = new Restaurant();
         res2.setName("El chino");
         res2.setFoodType(new FoodType(1,"Cgina"));
+        res2.setLatitude(9.925723);
+        res2.setLongitude(-84.023894);
         Restaurant res3 = new Restaurant();
         res3.setName("Donde Marta");
         res3.setFoodType(new FoodType(1,"Típica"));
+        res3.setLatitude(9.927831);
+        res3.setLongitude(-84.020846);
 
         restuarants.add(res1);
         restuarants.add(res2);
