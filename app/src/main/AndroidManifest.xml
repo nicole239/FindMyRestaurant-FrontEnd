@@ -9,13 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.AgregarRestauranteActivity"></activity>
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".view.AgregarRestauranteActivity" />
         <activity android:name=".view.DetalleRestauranteActivity" />
         <activity
             android:name=".view.TabbedActivity"
             android:label="@string/title_activity_tabbed"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".view.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,8 +30,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

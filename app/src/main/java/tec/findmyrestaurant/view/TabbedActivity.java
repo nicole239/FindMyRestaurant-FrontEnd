@@ -1,13 +1,18 @@
 package tec.findmyrestaurant.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import tec.findmyrestaurant.R;
+import tec.findmyrestaurant.SearchActivity;
 
 
 public class TabbedActivity extends AppCompatActivity {
@@ -31,6 +36,13 @@ public class TabbedActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        FloatingActionButton btnSearch = findViewById(R.id.fabSeach);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                searchBtn_onClick();
+            }
+        });
+
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -38,5 +50,10 @@ public class TabbedActivity extends AppCompatActivity {
         adapter.addFragment(new MapFragment(),"MAP");
         adapter.addFragment(new ListFragment(),"LIST");
         viewPager.setAdapter(adapter);
+    }
+
+    private void searchBtn_onClick(){
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
     }
 }
