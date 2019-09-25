@@ -4,14 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchActivity">
+    tools:context=".view.SearchActivity">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapViewSearch"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_row="1"
+        android:layout_column="2" />
 
     <GridLayout
         android:id="@+id/gridSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/mapViewSearch"
         android:columnCount="2"
-        android:rowCount="6">
+        android:rowCount="5">
 
         <EditText
             android:id="@+id/txtSearchName"
@@ -27,8 +36,9 @@
             android:id="@+id/txtRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="2"
+            android:layout_row="1"
             android:layout_column="1"
+            android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="radio en km"
             android:inputType="number" />
@@ -37,7 +47,7 @@
             android:id="@+id/searchCalification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="4"
+            android:layout_row="3"
             android:layout_column="1"
             android:layout_gravity="start|center_vertical"
             android:layout_marginTop="15dp" />
@@ -46,7 +56,7 @@
             android:id="@+id/spinnerPrice"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_row="3"
+            android:layout_row="2"
             android:layout_column="1"
             android:layout_marginTop="15dp"
             android:clipToPadding="false"
@@ -56,7 +66,7 @@
             android:id="@+id/spinnerFoodType"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_row="5"
+            android:layout_row="4"
             android:layout_column="1"
             android:layout_marginTop="15dp" />
 
@@ -75,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_column="0"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/location"
             android:textSize="18sp" />
 
@@ -83,7 +93,7 @@
             android:id="@+id/lblSearchPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="3"
+            android:layout_row="2"
             android:layout_column="0"
             android:layout_marginTop="15dp"
             android:gravity="center_vertical"
@@ -94,7 +104,7 @@
             android:id="@+id/lblSearchCalification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="4"
+            android:layout_row="3"
             android:layout_column="0"
             android:layout_marginTop="15dp"
             android:gravity="center_vertical"
@@ -105,18 +115,11 @@
             android:id="@+id/lblSearchType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="5"
+            android:layout_row="4"
             android:layout_column="0"
             android:layout_marginTop="15dp"
             android:text="@string/type"
             android:textSize="18sp" />
-
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapViewSearch"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_row="1"
-            android:layout_column="1" />
 
     </GridLayout>
 
