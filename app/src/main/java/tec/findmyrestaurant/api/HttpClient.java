@@ -10,7 +10,7 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpEntity;
 
 public class HttpClient {
-    private static final String BASE_URL = "http://www.findmyrestaurant.tk";
+    private static final String BASE_URL = "http://find-my-restaurant.herokuapp.com";
     private static final String CONTENT_TYPE = "application/json";
 
     public static void get(Context context, String route, RequestParams params, Header[] headers, AsyncHttpResponseHandler responseHandler){
