@@ -73,7 +73,6 @@ public class ListFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-
                  listViewRestaurants.invalidateViews();
             }
 
