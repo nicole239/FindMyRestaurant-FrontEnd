@@ -235,7 +235,7 @@
             android:orientation="vertical"
             android:layout_gravity="center_horizontal">
 
-            <view class="androidx.appcompat.app.AlertController$RecycleListView"
+            <view class="androidx.recyclerview.widget.RecyclerView"
                 android:id="@+id/detalle_restaurante_lista_comentarios_RV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

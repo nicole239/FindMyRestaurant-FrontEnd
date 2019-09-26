@@ -12,7 +12,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import tec.findmyrestaurant.R;
-import tec.findmyrestaurant.SearchActivity;
 
 
 public class TabbedActivity extends AppCompatActivity {

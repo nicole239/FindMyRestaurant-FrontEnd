@@ -113,7 +113,7 @@ public class Restaurant implements Serializable {
         return photos;
     }
 
-    public void setPhotos(ArrayList<String> photos) {
+    public void setPhotos(List<String> photos) {
         this.photos = photos;
     }
 

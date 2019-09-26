@@ -50,10 +50,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private MapView mapView;
 
-    LocationManager locationManager;
-    LocationListener locationListener;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
-    IconGenerator iconFactory;
+    private IconGenerator iconFactory;
 
     private static final String TAG = "TabMapFragment";
 
