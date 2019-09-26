@@ -5,6 +5,13 @@ public class Message {
     private String token;
     private String message;
     private int id;
+    private String guid;
+
+    public Message(){}
+
+    public Message(String message){
+        this.message=message;
+    }
 
     public boolean isAuth() {
         return auth;
@@ -20,5 +27,9 @@ public class Message {
 
     public int getId() {
         return id;
+    }
+
+    public String getGuid() {
+        return guid;
     }
 }

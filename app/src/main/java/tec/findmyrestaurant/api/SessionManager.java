@@ -22,6 +22,12 @@ public class SessionManager {
         SharedPreferences sharedPreferences = context.getSharedPreferences("tec.findmyrestaurant",Context.MODE_PRIVATE);
         return  sharedPreferences.getString("User",null);
     }
+    public static User getUser(Context context){
+        String email = getUserEmail(context);
+        User user = new User();
+        user.setEmail(email);
+        return user;
+    }
     public static String getToken(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("tec.findmyrestaurant",Context.MODE_PRIVATE);
         return sharedPreferences.getString("Token",null);

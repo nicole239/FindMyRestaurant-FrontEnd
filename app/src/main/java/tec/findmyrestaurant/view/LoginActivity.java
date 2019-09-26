@@ -8,29 +8,64 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.mobile.auth.core.IdentityHandler;
+import com.amazonaws.mobile.auth.core.IdentityManager;
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.AWSStartupHandler;
+import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobile.config.AWSConfiguration;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
+import com.amazonaws.services.cognitoidentityprovider.model.SignUpResult;
+
 import tec.findmyrestaurant.R;
 import tec.findmyrestaurant.api.Message;
 import tec.findmyrestaurant.api.Response;
 import tec.findmyrestaurant.api.SessionManager;
 import tec.findmyrestaurant.api.UserRequest;
+import tec.findmyrestaurant.api.amazon.AmazonRequest;
+import tec.findmyrestaurant.api.amazon.CognitoSettings;
 import tec.findmyrestaurant.model.User;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private AWSCredentialsProvider credentialsProvider;
+    private AWSConfiguration configuration;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+       /* AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
+            @Override
+            public void onComplete(AWSStartupResult awsStartupResult) {
+                credentialsProvider=AWSMobileClient.getInstance().getCredentialsProvider();
+                configuration = AWSMobileClient.getInstance().getConfiguration();
+                IdentityManager.getDefaultIdentityManager().getUserID(new IdentityHandler() {
+                    @Override
+                    public void onIdentityId(String identityId) {
+                        final String cachedIdentity = IdentityManager.getDefaultIdentityManager().getCachedUserID();
+                    }
+
+                    @Override
+                    public void handleError(Exception exception) {
+                        int g =6;
+                    }
+                });
+            }
+        }).execute();*/
     }
 
     public void btnLogin_Click(View view){
+        AmazonRequest.signIn(this,new Response());
         EditText txtEmail = findViewById(R.id.txtEmail);
         EditText txtPassword = findViewById(R.id.txtPassword);
 
         final User user = new User();
         user.setEmail(txtEmail.getText().toString());
         user.setPassword(txtPassword.getText().toString());
-
         UserRequest.authUser(getApplicationContext(),user, new Response<User>(){
             @Override
             public void onSuccess(Message message) {
@@ -45,5 +80,24 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Email or password incorrect",Toast.LENGTH_LONG).show();
             }
         });
+    }
+    public void test(){
+        final CognitoUserAttributes userAttributes = new CognitoUserAttributes();
+        final SignUpHandler signUpHandler = new SignUpHandler() {
+            @Override
+            public void onSuccess(CognitoUser user, SignUpResult signUpResult) {
+                int b=7;
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                int g7=0;            }
+        };
+
+        userAttributes.addAttribute("given_name","steven");
+        userAttributes.addAttribute("email","steven.moya.quinones@gmail.com");
+        CognitoSettings cognitoSettings = new CognitoSettings(this);
+        cognitoSettings.getUserPool().signUpInBackground("steven","ABCabc123.",userAttributes,null,signUpHandler);
+
     }
 }

@@ -1,5 +1,7 @@
 package tec.findmyrestaurant.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -10,6 +12,8 @@ public class FoodType implements Serializable {
     private int idFoodType;
     @SerializedName("foodname")
     private String name;
+
+    public FoodType(){}
 
     public FoodType(int idFoodType, String name) {
         this.idFoodType = idFoodType;
@@ -30,5 +34,11 @@ public class FoodType implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getName();
     }
 }

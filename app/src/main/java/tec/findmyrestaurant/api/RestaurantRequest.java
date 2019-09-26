@@ -16,6 +16,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import tec.findmyrestaurant.model.FoodType;
 import tec.findmyrestaurant.model.Restaurant;
 import tec.findmyrestaurant.model.User;
 
@@ -71,5 +72,20 @@ public class RestaurantRequest {
             Message message = new Message();
             restaurantResponse.onFailure(message);
         }
+    }
+    public static void getFoodTypes(Context context, final Response<FoodType> foodTypeResponse){
+        HttpClient.get(context,"foodtypes",null,SessionManager.getTokenHeader(context),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Type listType = new TypeToken<List<FoodType>>(){}.getType();
+                List<FoodType> foodTypes = new Gson().fromJson(response.toString(),listType);
+                foodTypeResponse.onSuccess(foodTypes);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Message message = new Gson().fromJson(errorResponse.toString(),Message.class);
+                foodTypeResponse.onFailure(message);
+            }
+        });
     }
 }

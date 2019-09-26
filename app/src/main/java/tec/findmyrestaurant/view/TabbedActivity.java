@@ -43,6 +43,13 @@ public class TabbedActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton btnAdd = findViewById(R.id.fabAdd);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addBtn_onClick();
+            }
+        });
+
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -54,6 +61,10 @@ public class TabbedActivity extends AppCompatActivity {
 
     private void searchBtn_onClick(){
         Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+    private void addBtn_onClick(){
+        Intent intent = new Intent(this, AddRestaurantActivity.class);
         startActivity(intent);
     }
 }

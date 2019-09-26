@@ -31,4 +31,18 @@ public class PhotoRequest {
             }
         });
     }
+    public static void getPhotoID(Context context,final Response photoResponse){
+        HttpClient.get(context, "photos/", null, SessionManager.getTokenHeader(context), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Message message = new Gson().fromJson(response.toString(),Message.class);
+                photoResponse.onSuccess(message);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Message message = new Gson().fromJson(errorResponse.toString(),Message.class);
+                photoResponse.onFailure(message);
+            }
+        });
+    }
 }
