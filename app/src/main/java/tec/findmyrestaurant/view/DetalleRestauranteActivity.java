@@ -20,9 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import tec.findmyrestaurant.R;
 import tec.findmyrestaurant.api.CalificationRequest;
+import tec.findmyrestaurant.api.CommentRequest;
 import tec.findmyrestaurant.api.Message;
 import tec.findmyrestaurant.api.Response;
+import tec.findmyrestaurant.api.RestaurantRequest;
 import tec.findmyrestaurant.model.Calification;
+import tec.findmyrestaurant.model.Comment;
+import tec.findmyrestaurant.model.FoodType;
 import tec.findmyrestaurant.model.Restaurant;
 
 public class DetalleRestauranteActivity extends AppCompatActivity {
@@ -90,6 +94,38 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                     super.onFailure(message);
                 }
             });
+
+            tipoComidaTV.setText(restaurant.getFoodType().getName());
+            switch (restaurant.getPrice()){
+                case 'H':
+                    precioRestauranteTV.setText("$$$");
+                    break;
+                case 'M':
+                    precioRestauranteTV.setText("$$");
+                    break;
+                case 'L':
+                    precioRestauranteTV.setText("$");
+                    break;
+                default:
+                    precioRestauranteTV.setText("Error");
+                    break;
+            }
+            String contenidoDatos = "Telefono: "+restaurant.getPhoneNumber()+" \nWebsite: "+restaurant.getWebsite();
+            datosContactoRestauranteTV.setText(contenidoDatos);
+
+            CommentRequest.getComments(this,restaurant.getIdRestaurant(), new Response<Comment>(){
+                @Override
+                public void onSuccess(List<Comment> list) {
+                    
+                }
+
+                @Override
+                public void onFailure(Message message) {
+                    super.onFailure(message);
+                }
+            });
+
+
 
 
 
