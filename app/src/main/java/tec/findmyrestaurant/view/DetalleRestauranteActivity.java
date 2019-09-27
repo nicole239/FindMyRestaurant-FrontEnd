@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -16,9 +17,11 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import tec.findmyrestaurant.R;
+import tec.findmyrestaurant.adapter.CommentAdapter;
 import tec.findmyrestaurant.api.CalificationRequest;
 import tec.findmyrestaurant.api.CommentRequest;
 import tec.findmyrestaurant.api.Message;
@@ -38,7 +41,7 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
     RatingBar calificacionRestauranteRB;
     EditText campoComentarioED;
     Button comentarioEnviarBTN;
-    RecyclerView listaComentarioRLV;
+    ListView listaComentarioRLV;
 
 
     @Override
@@ -52,12 +55,12 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
         precioRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_precio_contenido_TV);
         datosContactoRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_datos_contacto_contenido_TV);
         ubicacionRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_ubicacion_contenido_TV);
-        caruselFotosVP = (ViewPager) findViewById(R.id.detalle_restaurante_Carusel);
-        caruselAgregarBTN = (FloatingActionButton) findViewById(R.id.detalle_restaurante_carusel_BTN);
+        //caruselFotosVP = (ViewPager) findViewById(R.id.detalle_restaurante_Carusel);
+        //caruselAgregarBTN = (FloatingActionButton) findViewById(R.id.detalle_restaurante_carusel_BTN);
         calificacionRestauranteRB = (RatingBar) findViewById(R.id.detalle_restaurante_rating_bar);
         campoComentarioED = (EditText) findViewById(R.id.detalle_restaurante_comentario_ET);
         comentarioEnviarBTN = (Button) findViewById(R.id.detalle_restaurante_comentario_BTN);
-        listaComentarioRLV = (RecyclerView) findViewById(R.id.detalle_restaurante_lista_comentarios_RV);
+        listaComentarioRLV = (ListView) findViewById(R.id.detalle_restaurante_lista_comentarios_RV);
 
         //Recupera el  restaurante seleccionado
         try {
@@ -117,6 +120,23 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(List<Comment> list) {
                     
+                }
+
+                @Override
+                public void onFailure(Message message) {
+                    super.onFailure(message);
+                }
+            });
+
+            CommentRequest.getComments(this, restaurant.getIdRestaurant(), new Response<Comment>(){
+                @Override
+                public void onSuccess(List<Comment> list) {
+                    if(list.size()>0){
+                        CommentAdapter commentAdapter = new CommentAdapter(getApplicationContext(), list);
+                        Log.d("Comment", list.toString());
+                        Log.d("Comment", "Suer: "+list.get(0).getUser().getEmail()+" comment: "+list.get(0).getComment());
+                        listaComentarioRLV.setAdapter(commentAdapter);
+                    }
                 }
 
                 @Override
