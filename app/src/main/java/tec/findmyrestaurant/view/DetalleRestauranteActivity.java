@@ -4,6 +4,7 @@ package tec.findmyrestaurant.view;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -12,10 +13,15 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
+import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import tec.findmyrestaurant.R;
+import tec.findmyrestaurant.api.CalificationRequest;
+import tec.findmyrestaurant.api.Message;
+import tec.findmyrestaurant.api.Response;
+import tec.findmyrestaurant.model.Calification;
 import tec.findmyrestaurant.model.Restaurant;
 
 public class DetalleRestauranteActivity extends AppCompatActivity {
@@ -53,6 +59,35 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
 
             nombreRestauranteTV.setText(restaurant.getName());
             horarioRestauranteTV.setText(restaurant.getSchedule());
+
+            CalificationRequest.getCalifications(this, restaurant.getIdRestaurant(), new Response<Calification>(){
+                @Override
+                public void onSuccess(List<Calification> list) {
+                    if(list.size()>0){
+                        CalificationRequest.getRestaurantCalification(getApplicationContext(), restaurant.getIdRestaurant(), new Response<Calification>(){
+                            @Override
+                            public void onSuccess(Calification objet) {
+                                calificacionRestauranteRB.setRating(objet.getCalification());
+                            }
+
+                            @Override
+                            public void onFailure(Message message) {
+                                super.onFailure(message);
+                            }
+                        });
+                    }
+                    else{
+                        Log.d("Rating", "nada");
+                    }
+                }
+
+                @Override
+                public void onFailure(Message message) {
+                    super.onFailure(message);
+                }
+            });
+
+            
 
         } catch (IOException e) {
             e.printStackTrace();
