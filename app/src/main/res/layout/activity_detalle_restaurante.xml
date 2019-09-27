@@ -281,10 +281,6 @@
 
         </LinearLayout>
 
-<<<<<<< HEAD
-    </LinearLayout>
-</LinearLayout>
-=======
     </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
->>>>>>> kahho-detalle
+</LinearLayout>
+
