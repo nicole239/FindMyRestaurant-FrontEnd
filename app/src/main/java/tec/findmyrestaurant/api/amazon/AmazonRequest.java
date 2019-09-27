@@ -108,7 +108,7 @@ public class AmazonRequest {
                 @Override
                 public void onStateChanged(int id, TransferState state) {
                     if (state.equals(TransferState.COMPLETED)) {
-                        String URL = "https://" + Regions.US_EAST_1.getName() + ".amazonaws.com/" + "findmyrestaurantapp-deployments-mobilehub-761975919"+ "/" + name;
+                        String URL = "https://findmyrestaurantapp-deployments-mobilehub-761975919.s3.amazonaws.com"+ "/" + name;
                         response.onSuccess(new Message(URL));
                     } else if(state.equals(TransferState.FAILED) || state.equals(TransferState.CANCELED)){
                         response.onFailure(new Message("ERROR"));

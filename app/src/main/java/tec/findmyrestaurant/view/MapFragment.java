@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tec.findmyrestaurant.R;
+import tec.findmyrestaurant.api.Response;
+import tec.findmyrestaurant.api.RestaurantRequest;
 import tec.findmyrestaurant.model.FoodType;
 import tec.findmyrestaurant.model.Restaurant;
 
@@ -152,7 +154,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         mMap.setOnMyLocationClickListener(onMyLocationClickListener);
         getPermissions();
-        addRestaurantMarkers(getDummyRestaurants());
+        RestaurantRequest.getRestaurants(getActivity(),new Response<Restaurant>(){
+            @Override
+            public void onSuccess(List<Restaurant> list) {
+                addRestaurantMarkers(list);
+            }
+        });
+
     }
 
 

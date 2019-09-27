@@ -29,6 +29,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -123,14 +124,18 @@ public class LoginActivity extends AppCompatActivity {
         }).execute();*/
     }
 
+    public void btnRegister_Click(View view){
+        Intent intent = new Intent(LoginActivity.this, RegisterUserActivity.class);
+        startActivity(intent);
+    }
     public void btnLogin_Click(View view){
         AmazonRequest.signIn(this,new Response());
-        EditText txtEmail = findViewById(R.id.txtEmail);
-        EditText txtPassword = findViewById(R.id.txtPassword);
+        TextInputLayout txtEmail = findViewById(R.id.txtEmail);
+        TextInputLayout txtPassword = findViewById(R.id.txtPassword);
 
         final User user = new User();
-        user.setEmail(txtEmail.getText().toString());
-        user.setPassword(txtPassword.getText().toString());
+        user.setEmail(txtEmail.getEditText().getText().toString());
+        user.setPassword(txtPassword.getEditText().getText().toString());
 
         UserRequest.authUser(getApplicationContext(),user, new Response<User>(){
             @Override
