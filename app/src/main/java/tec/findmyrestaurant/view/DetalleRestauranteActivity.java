@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +28,7 @@ import tec.findmyrestaurant.model.Restaurant;
 public class DetalleRestauranteActivity extends AppCompatActivity {
 
     Restaurant restaurant;
-    TextView nombreRestauranteTV, horarioRestauranteTV, tipoComidaTV, precioRestauranteTV, datosContactoRestauranteTV, ubicacionRestauranteTV;
+    TextView nombreRestauranteTV, horarioRestauranteTV, tipoComidaTV, precioRestauranteTV, datosContactoRestauranteTV, ubicacionRestauranteTV, calicacionValorTV;
     ViewPager caruselFotosVP;
     FloatingActionButton caruselAgregarBTN;
     RatingBar calificacionRestauranteRB;
@@ -40,6 +41,7 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_restaurante);
+        calicacionValorTV = (TextView) findViewById(R.id.detalle_restaurante_ratin_bar_value_TV);
         nombreRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_nombre_text_view);
         horarioRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_horario_contenido_TV);
         tipoComidaTV = (TextView) findViewById(R.id.detalle_restaurante_tipo_comida_contenido_TV);
@@ -67,7 +69,9 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                         CalificationRequest.getRestaurantCalification(getApplicationContext(), restaurant.getIdRestaurant(), new Response<Calification>(){
                             @Override
                             public void onSuccess(Calification objet) {
+                                Log.d("Rating",""+objet.getCalification());
                                 calificacionRestauranteRB.setRating(objet.getCalification());
+                                calicacionValorTV.setText(""+ BigDecimal.valueOf(objet.getCalification()).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue());
                             }
 
                             @Override
@@ -87,7 +91,7 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                 }
             });
 
-            
+
 
         } catch (IOException e) {
             e.printStackTrace();
