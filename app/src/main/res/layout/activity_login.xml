@@ -9,9 +9,11 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/logo_find_my_restaurant_transparent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -20,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:shadowColor="@android:color/black"
-        android:text="Login"
+        android:text="FindMyRestaurant"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
@@ -51,5 +53,13 @@
         android:layout_marginTop="50dp"
         android:onClick="btnLogin_Click"
         android:text="Login" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btnLoginFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
 
 </LinearLayout>

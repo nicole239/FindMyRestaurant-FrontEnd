@@ -1,136 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.SearchActivity">
 
+    <TextView
+        android:id="@+id/lblSearchLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mark your location:"
+        android:textSize="18sp" />
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapViewSearch"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_centerHorizontal="true"
-        android:layout_row="1"
-        android:layout_column="2" />
+        android:layout_height="250dp" />
 
-    <GridLayout
-        android:id="@+id/gridSearch"
+    <EditText
+        android:id="@+id/txtSearchName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mapViewSearch"
-        android:columnCount="2"
-        android:rowCount="5">
+        android:ems="10"
+        android:hint="Restaurant Name"
+        android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/txtSearchName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:ems="10"
-            android:hint="Restaurant Name"
-            android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/txtRadio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Radio en km"
+        android:inputType="number" />
 
-        <EditText
-            android:id="@+id/txtRadio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="radio en km"
-            android:inputType="number" />
+    <RatingBar
+        android:id="@+id/searchCalification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-        <RatingBar
-            android:id="@+id/searchCalification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="1"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginTop="15dp" />
+    <TextView
+        android:id="@+id/lblSearchPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:text="@string/price"
+        android:textSize="14sp" />
 
-        <Spinner
-            android:id="@+id/spinnerPrice"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:layout_marginTop="15dp"
-            android:clipToPadding="false"
-            android:spinnerMode="dropdown" />
+    <Spinner
+        android:id="@+id/spinnerPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog" />
 
-        <Spinner
-            android:id="@+id/spinnerFoodType"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_row="4"
-            android:layout_column="1"
-            android:layout_marginTop="15dp" />
-
-        <TextView
-            android:id="@+id/lblSearchName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:text="@string/res_name"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/lblSearchLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_marginTop="20dp"
-            android:text="@string/location"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/lblSearchPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:layout_marginTop="15dp"
-            android:gravity="center_vertical"
-            android:text="@string/price"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/lblSearchCalification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="0"
-            android:layout_marginTop="15dp"
-            android:gravity="center_vertical"
-            android:text="@string/calification"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/lblSearchType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="4"
-            android:layout_column="0"
-            android:layout_marginTop="15dp"
-            android:text="@string/type"
-            android:textSize="18sp" />
-
-    </GridLayout>
+    <TextView
+        android:id="@+id/lblSearchType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/type"
+        android:textSize="14sp" />
+    <Spinner
+        android:id="@+id/spinnerSearchFoodType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"/>
 
     <Button
         android:id="@+id/btnSearch"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gridSearch"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:onClick="btnSearch_onClick"
         android:text="Search" />
 
 
-</RelativeLayout>
+</LinearLayout>
