@@ -61,18 +61,13 @@
             <LinearLayout
                 android:id="@+id/detalle_restaurante_layout_contenido"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Submit"
-                    android:visibility="invisible"></Button>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -98,6 +93,15 @@
                         android:layout_gravity="bottom"
                         android:textSize="10sp"></TextView>
                 </LinearLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_border"
+                    android:text="Calificanos"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:visibility="visible"></Button>
 
 
                 <!--
@@ -109,14 +113,16 @@
                     android:id="@+id/detalle_restaurante_layout_horario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/detalle_restaurante_horario_label_TV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Horario: "
                         android:textSize="18sp"></TextView>
 
@@ -135,12 +141,13 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/detalle_restaurante_tipo_comida_label_TV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Tipo de comida:"
                         android:textSize="18sp"></TextView>
 
@@ -159,19 +166,21 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/detalle_restaurante_precio_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Precio:"
+                        android:textStyle="bold"
                         android:textSize="18sp"></TextView>
 
                     <TextView
                         android:id="@+id/detalle_restaurante_precio_contenido_TV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/price_green"
                         android:text=" random "
                         android:textSize="18sp"></TextView>
 
@@ -183,12 +192,13 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/detalle_restaurante_datos_contacto_label_TV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Datos de contacto:"
                         android:textSize="18sp"></TextView>
 
@@ -207,12 +217,13 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/detalle_restaurante_ubicacion_label_TV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Ubicacion: "
                         android:textSize="18sp"></TextView>
 
@@ -257,10 +268,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
+                android:paddingStart="15dp"
                 android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/detalle_restaurante_lista_comentarios_RV"
+                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"></ListView>
 

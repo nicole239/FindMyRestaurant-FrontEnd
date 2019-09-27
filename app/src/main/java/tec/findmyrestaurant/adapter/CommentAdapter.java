@@ -53,7 +53,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
             result=convertView;
         }
 
-        viewHolder.correo.setText(comment.getUser().getEmail());
+        viewHolder.correo.setText(comment.getUser().getEmail()+" dijo: ");
         viewHolder.contenido.setText(comment.getComment());
 
 
