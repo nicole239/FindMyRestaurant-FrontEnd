@@ -16,8 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.RegisterUserActivity"
-            android:theme="@style/AppTheme.NoActionBar2"></activity>
+        <activity android:name=".view.ForgotPasswordActivity" android:theme="@style/AppTheme.NoActionBar2"></activity>
+        <activity
+            android:name=".view.RegisterUserActivity"
+            android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".view.SelectPlaceActivity"
             android:theme="@style/AppTheme.NoActionBar2" />

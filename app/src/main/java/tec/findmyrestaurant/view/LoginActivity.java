@@ -4,23 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.mobile.auth.core.IdentityHandler;
-import com.amazonaws.mobile.auth.core.IdentityManager;
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.AWSStartupHandler;
-import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
 import com.amazonaws.services.cognitoidentityprovider.model.SignUpResult;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -101,27 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("mierror",exception.toString());
             }
         });
-
-
-
-       /* AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
-            @Override
-            public void onComplete(AWSStartupResult awsStartupResult) {
-                credentialsProvider=AWSMobileClient.getInstance().getCredentialsProvider();
-                configuration = AWSMobileClient.getInstance().getConfiguration();
-                IdentityManager.getDefaultIdentityManager().getUserID(new IdentityHandler() {
-                    @Override
-                    public void onIdentityId(String identityId) {
-                        final String cachedIdentity = IdentityManager.getDefaultIdentityManager().getCachedUserID();
-                    }
-
-                    @Override
-                    public void handleError(Exception exception) {
-                        int g =6;
-                    }
-                });
-            }
-        }).execute();*/
     }
 
     public void btnRegister_Click(View view){
@@ -151,6 +123,10 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Email or password incorrect",Toast.LENGTH_LONG).show();
             }
         });
+    }
+    public void btnForgotPassword(View view){
+        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+        startActivity(intent);
     }
     public void test(){
         final CognitoUserAttributes userAttributes = new CognitoUserAttributes();

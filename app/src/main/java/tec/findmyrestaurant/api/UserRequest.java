@@ -12,7 +12,9 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -86,4 +88,46 @@ public class UserRequest {
         }
 
     }
+    public static void forgotPassword(Context context, String email, final Response userResponse){
+        try{
+            HttpClient.get(context, "users/recover/forgot/"+email, null,null, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Message message = new Gson().fromJson(response.toString(),Message.class);
+                    userResponse.onSuccess(message);
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Message message = new Gson().fromJson(errorResponse.toString(),Message.class);
+                    userResponse.onFailure(message);
+                }
+            });
+        }catch (Exception e){
+
+        }
+    }
+    public static void newPassword(Context context, String email,String code, String password, final Response userResponse){
+        try{
+            JSONObject params = new JSONObject();
+            params.put("email",email);
+            params.put("code",code);
+            params.put("password",password);
+            StringEntity entity = new StringEntity(params.toString());
+            HttpClient.put(context, "users/recover/newpassword/", entity,null, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Message message = new Gson().fromJson(response.toString(),Message.class);
+                    userResponse.onSuccess(message);
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Message message = new Gson().fromJson(errorResponse.toString(),Message.class);
+                    userResponse.onFailure(message);
+                }
+            });
+        }catch (Exception e){
+
+        }
+    }
 }
+

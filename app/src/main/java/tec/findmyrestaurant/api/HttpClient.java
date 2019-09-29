@@ -21,6 +21,10 @@ public class HttpClient {
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.post(context,buildURL(route),headers,entity,CONTENT_TYPE,asyncHttpResponseHandler);
     }
+    public static void put(Context context, String route, HttpEntity entity,Header[] headers,AsyncHttpResponseHandler asyncHttpResponseHandler){
+        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+        asyncHttpClient.put(context,buildURL(route),headers,entity,CONTENT_TYPE,asyncHttpResponseHandler);
+    }
 
     private static String buildURL(String route){
         return BASE_URL+"/"+route;
