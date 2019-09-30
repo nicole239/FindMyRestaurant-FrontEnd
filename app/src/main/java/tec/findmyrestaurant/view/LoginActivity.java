@@ -1,7 +1,11 @@
 package tec.findmyrestaurant.view;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -27,6 +31,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
 import tec.findmyrestaurant.R;
 import tec.findmyrestaurant.api.Message;
 import tec.findmyrestaurant.api.Response;
@@ -49,9 +57,26 @@ public class LoginActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.btnLoginFacebook);
-        loginButton.setPermissions("email");
+        loginButton.setPermissions(Arrays.asList("email", "public_profile"));
 
         // Callback registration
+        /*
+        try { PackageInfo info = getPackageManager().getPackageInfo("tec.findmyrestaurant", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String sign= Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                Log.d("MYKEYHASH", sign);
+                Toast.makeText(getApplicationContext(),sign, Toast.LENGTH_LONG).show();
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("MYKEYHASH",e.toString());
+        }
+        catch (NoSuchAlgorithmException e) {
+            Log.e("MYKEYHASH",e.toString());
+        }
+
+         */
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -63,29 +88,23 @@ public class LoginActivity extends AppCompatActivity {
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
-                                Log.v("LoginActivity", response.toString());
-
-                                // Application code
+                                Log.v("MYEMAIL", response.toString());
                                 try {
-                                    user.setEmail(object.getString("email"));
+                                    register(object.getString("email"),object.getString("id"),object.getString("name"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "email");
+                parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
-
-                SessionManager.saveToken(LoginActivity.this, user,accessToken.getToken());
-                Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                startActivity(intent);
             }
 
             @Override
             public void onCancel() {
-                // App code
+                Log.e("mierror","Canceled");
             }
 
             @Override
@@ -124,6 +143,60 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void register(final String email, final String password,final  String name){
+        UserRequest.getUser(this,email,new Response<User>(){
+            @Override
+            public void onSuccess(User objet) {
+                Log.d("LoginActivityM","El email ya esta registrado");
+                login(email,password);
+            }
+
+            @Override
+            public void onFailure(Message message) {
+                final User user = new User();
+                user.setEmail(email);
+                user.setName(name);
+                user.setPassword(password);
+                user.setType(User.REGULAR);
+                UserRequest.registerUser(LoginActivity.this,user,new Response<User>(){
+                    @Override
+                    public void onSuccess(Message message) {
+                        Log.d("LoginActivityM","Se pudo registrar al usuario");
+                        login(email,password);
+                    }
+
+                    @Override
+                    public void onFailure(Message message) {
+                        Toast.makeText(LoginActivity.this,"No se pudo registrar al usario",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
+    private void login(String email, String password){
+        //Login
+        final User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+
+        UserRequest.authUser(getApplicationContext(),user, new Response<User>(){
+            @Override
+            public void onSuccess(Message message) {
+                if(message.isAuth()) {
+                    SessionManager.saveToken(LoginActivity.this, user,message.getToken());
+                    Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                    startActivity(intent);
+                }
+            }
+            @Override
+            public void onFailure(Message message) {
+                Toast.makeText(getApplicationContext(),"Email or password incorrect",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     public void btnForgotPassword(View view){
         Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
         startActivity(intent);
