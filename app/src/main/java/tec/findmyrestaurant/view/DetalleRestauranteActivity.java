@@ -3,13 +3,19 @@ package tec.findmyrestaurant.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,10 +33,12 @@ import tec.findmyrestaurant.api.CommentRequest;
 import tec.findmyrestaurant.api.Message;
 import tec.findmyrestaurant.api.Response;
 import tec.findmyrestaurant.api.RestaurantRequest;
+import tec.findmyrestaurant.api.SessionManager;
 import tec.findmyrestaurant.model.Calification;
 import tec.findmyrestaurant.model.Comment;
 import tec.findmyrestaurant.model.FoodType;
 import tec.findmyrestaurant.model.Restaurant;
+import tec.findmyrestaurant.model.User;
 
 public class DetalleRestauranteActivity extends AppCompatActivity {
 
@@ -42,6 +50,8 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
     EditText campoComentarioED;
     Button comentarioEnviarBTN;
     ListView listaComentarioRLV;
+
+
 
 
     @Override
@@ -61,6 +71,14 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
         campoComentarioED = (EditText) findViewById(R.id.detalle_restaurante_comentario_ET);
         comentarioEnviarBTN = (Button) findViewById(R.id.detalle_restaurante_comentario_BTN);
         listaComentarioRLV = (ListView) findViewById(R.id.detalle_restaurante_lista_comentarios_RV);
+
+        listaComentarioRLV.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
         //Recupera el  restaurante seleccionado
         try {
@@ -116,18 +134,6 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
             String contenidoDatos = "Telefono: "+restaurant.getPhoneNumber()+" \nWebsite: "+restaurant.getWebsite();
             datosContactoRestauranteTV.setText(contenidoDatos);
 
-            CommentRequest.getComments(this,restaurant.getIdRestaurant(), new Response<Comment>(){
-                @Override
-                public void onSuccess(List<Comment> list) {
-                    
-                }
-
-                @Override
-                public void onFailure(Message message) {
-                    super.onFailure(message);
-                }
-            });
-
             CommentRequest.getComments(this, restaurant.getIdRestaurant(), new Response<Comment>(){
                 @Override
                 public void onSuccess(List<Comment> list) {
@@ -145,12 +151,60 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                 }
             });
 
-
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
+        comentarioEnviarBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!TextUtils.isEmpty(campoComentarioED.getText().toString())){
+                    User usuario = SessionManager.getUser(getApplicationContext());
+                    Comment comentario = new Comment();
+                    comentario.setUser(usuario);
+                    comentario.setIdRestaurant(restaurant.getIdRestaurant());
+                    comentario.setComment(campoComentarioED.getText().toString());
+                    CommentRequest.registerComment(getApplicationContext(),comentario, new Response<Restaurant>(){
+                        @Override
+                        public void onSuccess(Message message) {
+                            Log.d("Comment", "Success: "+message.getMessage());
+                            CommentRequest.getComments(getApplicationContext(), restaurant.getIdRestaurant(), new Response<Comment>(){
+                                @Override
+                                public void onSuccess(List<Comment> list) {
+                                    if(list.size()>0){
+                                        CommentAdapter commentAdapter = new CommentAdapter(getApplicationContext(), list);
+                                        Log.d("Comment", list.toString());
+                                        Log.d("Comment", "Suer: "+list.get(0).getUser().getEmail()+" comment: "+list.get(0).getComment());
+                                        listaComentarioRLV.setAdapter(commentAdapter);
+                                    }
+                                    try {
+                                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                                        campoComentarioED.getText().clear();
+                                    } catch (Exception e) {
+                                        Log.d("Comment", "Error en: "+e.getMessage());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Message message) {
+                                    super.onFailure(message);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(Message message) {
+                            Log.d("Comment","Error: "+message.getMessage());
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Debe escribir el comentario",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }

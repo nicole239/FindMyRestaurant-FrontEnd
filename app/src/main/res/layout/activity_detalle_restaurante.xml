@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.DetalleRestauranteActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -259,14 +261,14 @@
                     android:id="@+id/detalle_restaurante_comentario_BTN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SEND"></Button>
+                    android:text="Enviar"></Button>
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/detalle_restaurante_layout_lista_comentarios"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
                 android:paddingStart="15dp"
                 android:orientation="vertical">
@@ -275,7 +277,8 @@
                     android:id="@+id/detalle_restaurante_lista_comentarios_RV"
                     android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></ListView>
+                    android:scrollbars="none"
+                    android:layout_height="300dp"></ListView>
 
             </LinearLayout>
 
