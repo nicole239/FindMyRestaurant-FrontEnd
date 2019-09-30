@@ -67,4 +67,9 @@ public class TabbedActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddRestaurantActivity.class);
         startActivity(intent);
     }
+
+    public void logoutBtn_onClick(View view){
+        Intent intent =  new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }
