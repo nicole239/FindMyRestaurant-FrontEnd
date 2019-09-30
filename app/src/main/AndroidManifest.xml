@@ -19,20 +19,25 @@
         <activity android:name=".view.ForgotPasswordActivity" android:theme="@style/AppTheme.NoActionBar2"></activity>
         <activity
             android:name=".view.RegisterUserActivity"
-            android:theme="@style/AppTheme.NoActionBar2" />
+            android:theme="@style/AppTheme.NoActionBar2"
+            android:parentActivityName=".view.LoginActivity"/>
         <activity
             android:name=".view.SelectPlaceActivity"
             android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".view.schedule.ScheduleActivity"
             android:theme="@style/AppTheme.NoActionBar2" />
-        <activity android:name=".SearchActivity" />
+
         <activity
             android:name=".view.AddRestaurantActivity"
-            android:theme="@style/AppTheme.NoActionBar2" />
-        <activity android:name=".view.SearchActivity" />
-        <activity android:name=".view.AgregarRestauranteActivity" />
-        <activity android:name=".view.DetalleRestauranteActivity" />
+            android:theme="@style/AppTheme.NoActionBar2"
+            android:parentActivityName=".view.TabbedActivity"/>
+        <activity
+            android:name=".view.SearchActivity"
+            android:parentActivityName=".view.TabbedActivity"/>
+        <activity
+            android:name=".view.DetalleRestauranteActivity"
+            android:parentActivityName=".view.TabbedActivity"/>
         <activity
             android:name=".view.TabbedActivity"
             android:label="@string/title_activity_tabbed"

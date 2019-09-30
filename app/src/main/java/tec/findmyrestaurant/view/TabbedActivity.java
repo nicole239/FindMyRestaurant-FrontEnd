@@ -16,6 +16,7 @@ import tec.findmyrestaurant.R;
 
 public class TabbedActivity extends AppCompatActivity {
 
+    public static final String KEY_EXTRA = "RESTAURANT_LIST_RESULT";
     private static final String TAG = "MainActivity";
 
     private SectionsPageAdapter sectionsPageAdapter;

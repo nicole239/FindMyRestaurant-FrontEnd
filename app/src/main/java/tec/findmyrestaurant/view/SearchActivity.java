@@ -3,6 +3,7 @@ package tec.findmyrestaurant.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,14 +22,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import tec.findmyrestaurant.R;
 import tec.findmyrestaurant.api.Message;
 import tec.findmyrestaurant.api.Response;
 import tec.findmyrestaurant.api.RestaurantRequest;
+import tec.findmyrestaurant.api.SearchRequest;
 import tec.findmyrestaurant.model.FoodType;
+import tec.findmyrestaurant.model.Restaurant;
 
 public class SearchActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -68,54 +74,64 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
     public void btnSearch_onClick(View view){
-        //Get values from view
+
+        SearchRequest searchRequest = new SearchRequest();
+
         String name = txtName.getText().toString();
-        char price;
-        switch(spinnerPrice.getSelectedItemPosition()){
-            case 0:
-                price = 'L';
-                break;
-            case 1:
-                price = 'M';
-                break;
-            default:
-                price = 'H';
-                break;
+        if(!name.isEmpty()){
+            Log.i("SEARCHING","With name");
+            searchRequest = searchRequest.setName(name);
+        }
+        char price = (char) spinnerPrice.getSelectedItem();
+        if(price != ' '){
+            Log.i("SEARCHING","With price");
+            searchRequest = searchRequest.withPrice(price);
         }
         FoodType type = (FoodType) spinnerType.getSelectedItem();
+        searchRequest = searchRequest.setFoodType(type.getIdfoodtype());
         float minCalification = ratingBarcalification.getRating();
+        searchRequest = searchRequest.calificationAtLeast(minCalification);
 
         Log.i("SEARCHING",name+" "+price+ " "+type.getName()+" "+minCalification);
 
         if(locationMarker != null) {
             double latitude = locationMarker.getPosition().latitude;
             double longitude = locationMarker.getPosition().longitude;
-            int radio = Integer.parseInt(txtRadio.getText().toString());
-            Log.i("SEARCHING",latitude+" ,"+longitude+" r:"+radio);
+            int radius = Integer.parseInt(txtRadio.getText().toString());
+            searchRequest.withLocation(latitude,longitude,radius);
+            Log.i("SEARCHING",latitude+" ,"+longitude+" r:"+radius);
         }
 
-
-        //TODO: CALL SERVER SEARCH
+        searchRequest.request(this,new Response<Restaurant>(){
+            @Override
+            public void onSuccess(List<Restaurant> list) {
+                Intent intent = new Intent(SearchActivity.this, TabbedActivity.class);
+                try {
+                    intent.putExtra(TabbedActivity.KEY_EXTRA, ObjectSerializer.serialize((Serializable)list));
+                } catch (IOException e) {
+                    Log.e("SEARCHING", "Serializing error");
+                }
+                startActivity(intent);
+            }
+            @Override
+            public void onFailure(Message message) {
+                Toast.makeText(SearchActivity.this,"Error searching restaurants",Toast.LENGTH_SHORT).show();
+                Log.i("SEARCHING", "Error buscando restaurantes");
+            }
+        });
     }
 
     private void setPriceSpinner(){
-        List<String> prices = new ArrayList<>();
-        prices.add("Low");
-        prices.add("Medium");
-        prices.add("High");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_spinner_item,
-                prices
-        );
-        spinnerPrice.setAdapter(adapter);
+        List<Character> prices = Arrays.asList(new Character[]{' ','H','M','L'});
+        ArrayAdapter<Character> adapterPrice = new ArrayAdapter<>(this,R.layout.spinner_item,prices);
+        spinnerPrice.setAdapter(adapterPrice);
     }
 
     private void setFoodTypeSpinner(){
         RestaurantRequest.getFoodTypes(this,new Response<FoodType>(){
             @Override
             public void onSuccess(List<FoodType> list) {
+                list.add(0,new FoodType(-1,"None"));
                 ArrayAdapter<FoodType> adapterFood = new ArrayAdapter<FoodType>(SearchActivity.this,R.layout.spinner_item,list);
                 spinnerType.setAdapter(adapterFood);
             }
@@ -206,4 +222,5 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 15));
             }
         };
+
 }

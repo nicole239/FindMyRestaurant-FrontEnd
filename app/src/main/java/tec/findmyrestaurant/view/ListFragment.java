@@ -40,17 +40,38 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list,container,false);
 
         listViewRestaurants = view.findViewById(R.id.listViewRestaurants);
-        /*
-        final ListAdapter adapter = new ListAdapter(getActivity(), getDummyRestaurants());
-        listViewRestaurants.setAdapter(adapter);
-        */
-        getRestaurants();
+
+        if (getActivity().getIntent().hasExtra(TabbedActivity.KEY_EXTRA)) {
+            try {
+                ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>)ObjectSerializer.deserialize(getActivity().getIntent().getStringExtra(TabbedActivity.KEY_EXTRA));
+                final ListAdapter adapter = new ListAdapter(getActivity(), restaurants);
+                listViewRestaurants.setAdapter(adapter);
+                listViewRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        Intent intent = new Intent(getActivity(),DetalleRestauranteActivity.class);
+                        try {
+                            intent.putExtra("restaurant",ObjectSerializer.serialize((Serializable) adapter.getItem(i)));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        startActivity(intent);
+                    }
+                });
+                listViewRestaurants.invalidateViews();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            getRestaurants();
+        }
         return view;
     }
 
 
     private ArrayList<Restaurant> getRestaurants(){
-        //TODO: implement get restaurants
+
 
         RestaurantRequest.getRestaurants(getActivity().getApplicationContext(), new Response<Restaurant>(){
             @Override
@@ -78,8 +99,8 @@ public class ListFragment extends Fragment {
 
             @Override
             public void onFailure(Message message) {
-                Toast.makeText(getActivity(),"Error en cargar restayrante",Toast.LENGTH_SHORT).show();
-                Log.d("GETREST", "Error en cargar");
+                Toast.makeText(getActivity(),"Error en cargar restaurante",Toast.LENGTH_SHORT).show();
+                Log.d("GETREST", "Error al cargar");
             }
         });
 
@@ -87,29 +108,4 @@ public class ListFragment extends Fragment {
     }
 
 
-
-    private ArrayList<Restaurant> getDummyRestaurants(){
-        ArrayList<Restaurant> restuarants = new ArrayList<>();
-        Restaurant res1 = new Restaurant();
-        res1.setName("McDondals");
-        res1.setFoodType(new FoodType(1,"Chatarra"));
-        res1.setLatitude(9.9255015);
-        res1.setLongitude(-84.0240232);
-        Restaurant res2 = new Restaurant();
-        res2.setName("El chino");
-        res2.setFoodType(new FoodType(1,"Cgina"));
-        res2.setLatitude(9.925723);
-        res2.setLongitude(-84.023894);
-        Restaurant res3 = new Restaurant();
-        res3.setName("Donde Marta");
-        res3.setFoodType(new FoodType(1,"Típica"));
-        res3.setLatitude(9.927831);
-        res3.setLongitude(-84.020846);
-
-        restuarants.add(res1);
-        restuarants.add(res2);
-        restuarants.add(res3);
-
-        return restuarants;
-    }
 }
