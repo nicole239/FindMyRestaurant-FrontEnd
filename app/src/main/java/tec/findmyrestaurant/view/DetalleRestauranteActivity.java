@@ -3,6 +3,7 @@ package tec.findmyrestaurant.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -48,9 +49,10 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
     FloatingActionButton caruselAgregarBTN;
     RatingBar calificacionRestauranteRB;
     EditText campoComentarioED;
-    Button comentarioEnviarBTN;
+    Button comentarioEnviarBTN, calificarBtn;
     ListView listaComentarioRLV;
-
+    Dialog calificacionDialog;
+    float numStars =0.0f;
 
 
 
@@ -71,6 +73,42 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
         campoComentarioED = (EditText) findViewById(R.id.detalle_restaurante_comentario_ET);
         comentarioEnviarBTN = (Button) findViewById(R.id.detalle_restaurante_comentario_BTN);
         listaComentarioRLV = (ListView) findViewById(R.id.detalle_restaurante_lista_comentarios_RV);
+        calificacionDialog = new Dialog(this);
+
+        calificarBtn = (Button) findViewById(R.id.detalle_restaurante_calificar_BTN);
+
+        calificarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final TextView tv_close, tv_num;
+                RatingBar rb_cal;
+                Button calificar;
+                calificacionDialog.setContentView(R.layout.calificacion_popup);
+                tv_close = (TextView)calificacionDialog.findViewById(R.id.calificacion_popup_close_TV);
+                tv_num = (TextView)calificacionDialog.findViewById(R.id.calificacion_popup_number_TV);
+                rb_cal = (RatingBar)calificacionDialog.findViewById(R.id.calificacion_popup_ratingbar);
+                calificar = (Button) calificacionDialog.findViewById(R.id.calificacion_popup_BTN);
+
+                tv_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        calificacionDialog.dismiss();
+                    }
+                });
+
+                rb_cal.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                        Toast.makeText(DetalleRestauranteActivity.this, "num: "+v, Toast.LENGTH_SHORT).show();
+                        numStars = v;
+                        tv_num.setText(""+numStars);
+                    }
+                });
+
+                calificacionDialog.show();
+            }
+        });
+
 
         listaComentarioRLV.setOnTouchListener(new View.OnTouchListener() {
             @Override

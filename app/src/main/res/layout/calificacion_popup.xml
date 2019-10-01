@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="375dp"
+    android:padding="5dp"
+    android:background="@drawable/button_border"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/calificacion_popup_close_TV"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:text="X"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginEnd="20dp"
+        android:layout_gravity="end"
+        android:background="@drawable/circle_background">
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Tu Calificacion"></TextView>
+
+        <RatingBar
+            android:id="@+id/calificacion_popup_ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:stepSize="0.1"
+            android:numStars="5"></RatingBar>
+
+        <TextView
+            android:id="@+id/calificacion_popup_number_TV"
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
+
+        <Button
+            android:id="@+id/calificacion_popup_BTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_border"
+            android:text="Calificar"></Button>
+
+    </LinearLayout>
+
+</LinearLayout>
