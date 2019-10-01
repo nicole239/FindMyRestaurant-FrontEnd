@@ -129,6 +129,30 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(List<Calification> list) {
                     if(list.size()>0){
+                        boolean haveUser = false;
+                        for(Calification calification : list){
+                            if(calification.getUser().getEmail().equals(SessionManager.getUserEmail(getApplicationContext()))){
+                                haveUser = true;
+                            }
+                        }
+                        if(haveUser){
+                            calificarBtn.setEnabled(false);
+                            CalificationRequest.getRestaurantCalification(getApplicationContext(), restaurant.getIdRestaurant(), new Response<Calification>(){
+                                @Override
+                                public void onSuccess(Calification objet) {
+                                    Log.d("Rating",""+objet.getCalification());
+                                    calificacionRestauranteRB.setRating(objet.getCalification());
+                                    calicacionValorTV.setText(""+ BigDecimal.valueOf(objet.getCalification()).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue());
+                                }
+
+                                @Override
+                                public void onFailure(Message message) {
+                                    super.onFailure(message);
+                                }
+                            });
+                        }
+                    }
+                    else{
                         CalificationRequest.getRestaurantCalification(getApplicationContext(), restaurant.getIdRestaurant(), new Response<Calification>(){
                             @Override
                             public void onSuccess(Calification objet) {
@@ -142,8 +166,6 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                                 super.onFailure(message);
                             }
                         });
-                    }
-                    else{
                         Log.d("Rating", "nada");
                     }
                 }
