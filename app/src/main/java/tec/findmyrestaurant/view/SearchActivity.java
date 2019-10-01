@@ -80,17 +80,17 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
         String name = txtName.getText().toString();
         if(!name.isEmpty()){
             Log.i("SEARCHING","With name");
-            searchRequest = searchRequest.setName(name);
+            searchRequest.setName(name);
         }
-        char price = (char) spinnerPrice.getSelectedItem();
-        if(price != ' '){
+        String price = (String) spinnerPrice.getSelectedItem();
+        if(!price.isEmpty()){
             Log.i("SEARCHING","With price");
-            searchRequest = searchRequest.withPrice(price);
+            searchRequest.withPrice(price);
         }
         FoodType type = (FoodType) spinnerType.getSelectedItem();
-        searchRequest = searchRequest.setFoodType(type.getIdfoodtype());
-        float minCalification = ratingBarcalification.getRating();
-        searchRequest = searchRequest.calificationAtLeast(minCalification);
+        searchRequest.setFoodType(type.getIdfoodtype());
+        double minCalification = ratingBarcalification.getRating();
+        searchRequest.calificationAtLeast(minCalification);
 
         Log.i("SEARCHING",name+" "+price+ " "+type.getName()+" "+minCalification);
 
@@ -122,8 +122,8 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void setPriceSpinner(){
-        List<Character> prices = Arrays.asList(new Character[]{' ','H','M','L'});
-        ArrayAdapter<Character> adapterPrice = new ArrayAdapter<>(this,R.layout.spinner_item,prices);
+        List<String> prices = Arrays.asList(new String[]{"","H","M","L"});
+        ArrayAdapter<String> adapterPrice = new ArrayAdapter<>(this,R.layout.spinner_item,prices);
         spinnerPrice.setAdapter(adapterPrice);
     }
 

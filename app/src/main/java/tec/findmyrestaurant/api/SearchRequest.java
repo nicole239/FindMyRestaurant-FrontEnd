@@ -21,9 +21,9 @@ public class SearchRequest {
     private double radius=-1, latitude=-1, longitude=-1, calification=-1;
     private String name=null;
     private int foodType=-1;
-    private char price='0';
+    private String price="0";
 
-    public SearchRequest withPrice(char price){
+    public SearchRequest withPrice(String price){
         this.price=price;
         return this;
     }
@@ -67,7 +67,7 @@ public class SearchRequest {
                 object.put("lng",longitude);
                 object.put("r",radius);
             }
-            if(price!='0')
+            if(price!="0")
                 object.put("price",price);
             StringEntity params = new StringEntity(object.toString());
             HttpClient.post(context,"restaurants/search",params,SessionManager.getTokenHeader(context),new JsonHttpResponseHandler(){
