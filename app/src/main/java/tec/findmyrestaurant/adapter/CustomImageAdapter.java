@@ -19,7 +19,14 @@ public class CustomImageAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private List<Bitmap> lista;
+    private List<String> lista;
+    private List<Bitmap> imgs;
+
+    public CustomImageAdapter(Context context, List<String> lista,List<Bitmap> imgs) {
+        this.context = context;
+        this.lista = lista;
+        this.imgs=imgs;
+    }
 
     @Override
     public int getCount() {
@@ -28,18 +35,21 @@ public class CustomImageAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == ((LinearLayout) object);
+        return view.equals(object);
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        layoutInflater = LayoutInflater.from(context);
         View itemView = layoutInflater.inflate(R.layout.pager_item, container,false);
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
+        imageView.setTag(position+"img-view");
 
-        imageView.setImageBitmap(lista.get(position));
-
+        if(imgs.get(position)!=null) {
+            imageView.setImageBitmap(imgs.get(position));
+        }
         container.addView(itemView);
 
         return itemView;

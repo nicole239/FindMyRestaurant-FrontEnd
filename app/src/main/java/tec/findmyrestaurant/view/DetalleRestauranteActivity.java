@@ -1,11 +1,23 @@
 package tec.findmyrestaurant.view;
 
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -13,8 +25,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,19 +37,26 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import tec.findmyrestaurant.R;
 import tec.findmyrestaurant.adapter.CommentAdapter;
+import tec.findmyrestaurant.adapter.CustomImageAdapter;
 import tec.findmyrestaurant.api.CalificationRequest;
 import tec.findmyrestaurant.api.CommentRequest;
 import tec.findmyrestaurant.api.Message;
+import tec.findmyrestaurant.api.PhotoRequest;
 import tec.findmyrestaurant.api.Response;
 import tec.findmyrestaurant.api.RestaurantRequest;
 import tec.findmyrestaurant.api.SessionManager;
+import tec.findmyrestaurant.api.amazon.AmazonRequest;
 import tec.findmyrestaurant.model.Calification;
 import tec.findmyrestaurant.model.Comment;
 import tec.findmyrestaurant.model.FoodType;
@@ -53,6 +75,10 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
     ListView listaComentarioRLV;
     Dialog calificacionDialog;
     float numStars =0.0f;
+    CustomImageAdapter imageAdapter;
+    ProgressBar progressBar;
+    List<Bitmap> bitmaps;
+    List<String> urls;
 
 
 
@@ -60,6 +86,7 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_restaurante);
+        progressBar = findViewById(R.id.progress_bar);
         calicacionValorTV = (TextView) findViewById(R.id.detalle_restaurante_ratin_bar_value_TV);
         nombreRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_nombre_text_view);
         horarioRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_horario_contenido_TV);
@@ -210,6 +237,7 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                     super.onFailure(message);
                 }
             });
+            showPictures();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -266,5 +294,148 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void showPictures(){
+        caruselFotosVP = findViewById(R.id.detalle_restaurante_Carusel);
+        PhotoRequest.getPhotos(this,restaurant.getIdRestaurant(),new Response<String>(){
+            @Override
+            public void onSuccess(List<String> list) {
+                caruselFotosVP.setOffscreenPageLimit(list.size()-1);
+                List<ImageView> imgs = new ArrayList<>();
+                bitmaps = new ArrayList<>();
+                for(String s:list)
+                    bitmaps.add(null);
+                urls = list;
+                imageAdapter = new CustomImageAdapter(DetalleRestauranteActivity.this,list,bitmaps);
+                caruselFotosVP.setAdapter(imageAdapter);
+                for (int i=0;i<list.size();i++){
+                    imgs.add((ImageView) caruselFotosVP.findViewWithTag(i+"img-view"));
+                }
+                new RecoverPictures(imgs,list,bitmaps).execute();
+            }
+
+            @Override
+            public void onFailure(Message message) {
+                super.onFailure(message);
+            }
+        });
+    }
+    public void uploadImage(View view) {
+        final  CharSequence[] options = {"Take a picture","Chose from gallery","Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Chosee a restaurant image");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(options[i]==options[0])
+                    getPermissions();
+                else if(options[i]==options[1])
+                    getPermissionsGallery();
+                else if(options[i]==options[2])
+                    dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+    }
+    private void takePicture(){
+        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePicture,2);
+    }
+    private void chooseFromGallery(){
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickPhoto,3);
+    }
+    private void getPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        else
+            takePicture();
+    }
+    private void getPermissionsGallery() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
+        else
+            chooseFromGallery();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                if (grantResults.length > 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                        takePicture();
+                    else
+                        Toast.makeText(this, "Camera permission not granted, ",Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                        chooseFromGallery();
+                }
+                else
+                    Toast.makeText(this, "Gallery permission not granted, ",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode==2 || requestCode ==3){
+            if(resultCode == Activity.RESULT_OK){
+                progressBar.setVisibility(View.VISIBLE);
+                upload(data.getData());
+            }
+        }
+    }
+    private void upload(final Uri uri){
+        PhotoRequest.getPhotoID(this,new Response(){
+            @Override
+            public void onSuccess(Message message) {
+                AmazonRequest amazonRequest = new AmazonRequest(DetalleRestauranteActivity.this,message.getGuid(),uri,new Response(){
+                    @Override
+                    public void onSuccess(Message message) {
+
+                        PhotoRequest.uploadPhoto(DetalleRestauranteActivity.this,restaurant.getIdRestaurant(),message.getMessage(),new Response(){
+                            @Override
+                            public void onSuccess(Message message) {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                try {
+                                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(DetalleRestauranteActivity.this.getContentResolver(), uri);
+                                    bitmaps.add(bitmap);
+                                    urls.add("");
+                                    imageAdapter.notifyDataSetChanged();
+
+                                }catch (Exception e){
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Message message) {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                Toast.makeText(DetalleRestauranteActivity.this,"Image upload failed",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        //btnSubmit.setEnabled(true);
+                        //list.get(idx).url=message.getMessage();
+                    }
+
+                    @Override
+                    public void onFailure(Message message) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(DetalleRestauranteActivity.this,"Image upload failed",Toast.LENGTH_LONG).show();
+
+                    }
+                });
+                amazonRequest.beginUpload();
+            }
+
+            @Override
+            public void onFailure(Message message) {
+                progressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(DetalleRestauranteActivity.this,"Image upload failed",Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }

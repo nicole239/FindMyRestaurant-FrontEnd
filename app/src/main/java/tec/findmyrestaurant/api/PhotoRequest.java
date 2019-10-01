@@ -1,6 +1,7 @@
 package tec.findmyrestaurant.api;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +14,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import tec.findmyrestaurant.model.Restaurant;
 import tec.findmyrestaurant.model.User;
 
 public class PhotoRequest {
@@ -44,5 +47,30 @@ public class PhotoRequest {
                 photoResponse.onFailure(message);
             }
         });
+    }
+    public static void uploadPhoto(Context context,int id,String url,final Response response){
+        try {
+            JSONObject object = new JSONObject();
+            object.put("url",url);
+            object.put("idrestaurant",id);
+            StringEntity params = new StringEntity(object.toString());
+            HttpClient.post(context,"photos",params,SessionManager.getTokenHeader(context),new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject responseJSON) {
+                    Message message = new Gson().fromJson(responseJSON.toString(),Message.class);
+                    response.onSuccess(message);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Message message = new Gson().fromJson(errorResponse.toString(),Message.class);
+                    response.onFailure(message);
+                }
+            });
+        }catch (Exception e){
+            Log.e("Http-error",e.getMessage());
+            Message message = new Message();
+            response.onFailure(message);
+        }
     }
 }

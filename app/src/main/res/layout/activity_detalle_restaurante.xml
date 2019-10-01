@@ -46,17 +46,32 @@
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/detalle_restaurante_Carusel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"></androidx.viewpager.widget.ViewPager>
+                    android:layout_weight="0.7"
+                    android:clipToPadding="false"
+                    android:foregroundGravity="center"
+                    android:overScrollMode="never"></androidx.viewpager.widget.ViewPager>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/detalle_restaurante_carusel_BTN"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:background="#f00"></com.google.android.material.floatingactionbutton.FloatingActionButton>
-
+                    android:background="#f00"
+                    android:onClick="uploadImage"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:visibility="invisible"/>
+                </LinearLayout>
             </LinearLayout>
 
 
