@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,6 +75,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapView.getMapAsync(this);
 
         iconFactory = new IconGenerator(getActivity());
+
+        Button btnRefresh = view.findViewById(R.id.btnRefreshMap);
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadRestaurants();
+            }
+        });
 
         return view;
     }
@@ -161,14 +170,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 e.printStackTrace();
             }
         } else {
-            RestaurantRequest.getRestaurants(getActivity(),new Response<Restaurant>(){
-                @Override
-                public void onSuccess(List<Restaurant> list) {
-                    addRestaurantMarkers(list);
-                }
-            });
+            loadRestaurants();
         }
 
+
+
+    }
+
+    private void loadRestaurants(){
+        mMap.clear();
+        RestaurantRequest.getRestaurants(getActivity(),new Response<Restaurant>(){
+            @Override
+            public void onSuccess(List<Restaurant> list) {
+                addRestaurantMarkers(list);
+            }
+        });
 
     }
 
@@ -235,6 +251,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 16));
                 }
             };
+
+
 
 
 }

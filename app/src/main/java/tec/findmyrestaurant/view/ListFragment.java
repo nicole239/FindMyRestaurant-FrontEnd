@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,15 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_list,container,false);
+
+        final SwipeRefreshLayout swipeRefreshLayout =  view.findViewById(R.id.pullToRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRestaurants();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         listViewRestaurants = view.findViewById(R.id.listViewRestaurants);
 
