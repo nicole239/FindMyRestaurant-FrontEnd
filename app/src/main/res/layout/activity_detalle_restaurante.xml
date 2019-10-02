@@ -249,7 +249,8 @@
                         android:id="@+id/detalle_restaurante_ubicacion_contenido_TV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" hyperlink "
+                        android:onClick="setMap"
+                        android:text="Abrir Ubicación"
                         android:textSize="18sp"></TextView>
 
                 </LinearLayout>

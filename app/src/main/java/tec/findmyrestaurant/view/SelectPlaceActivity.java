@@ -10,12 +10,14 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import tec.findmyrestaurant.R;
 
@@ -31,6 +33,11 @@ public class SelectPlaceActivity extends AppCompatActivity implements OnMapReady
         Intent intent = getIntent();
         lat = intent.getDoubleExtra("lat",Double.MAX_VALUE);
         lng = intent.getDoubleExtra("lng",Double.MAX_VALUE);
+        if(intent.hasExtra("fromDetalle")){
+            (findViewById(R.id.txtSelectLocation)).setVisibility(View.INVISIBLE);
+            ((Button)findViewById(R.id.btnConfirm)).setText("OK");
+
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -53,6 +60,9 @@ public class SelectPlaceActivity extends AppCompatActivity implements OnMapReady
         if(lat != Double.MAX_VALUE && lng != Double.MAX_VALUE){
             LatLng latLng = new LatLng(lat,lng);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,17));
+        }
+        if(getIntent().hasExtra("fromDetalle")){
+            mMap.addMarker(new MarkerOptions().position(new LatLng(lat,lng)));
         }
         mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         mMap.setOnMyLocationClickListener(onMyLocationClickListener);

@@ -33,6 +33,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -79,12 +86,14 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
     ProgressBar progressBar;
     List<Bitmap> bitmaps;
     List<String> urls;
-
+    private MapView mapView;
+    private GoogleMap mMap;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_detalle_restaurante);
         progressBar = findViewById(R.id.progress_bar);
         calicacionValorTV = (TextView) findViewById(R.id.detalle_restaurante_ratin_bar_value_TV);
@@ -93,7 +102,6 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
         tipoComidaTV = (TextView) findViewById(R.id.detalle_restaurante_tipo_comida_contenido_TV);
         precioRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_precio_contenido_TV);
         datosContactoRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_datos_contacto_contenido_TV);
-        ubicacionRestauranteTV = (TextView) findViewById(R.id.detalle_restaurante_ubicacion_contenido_TV);
         //caruselFotosVP = (ViewPager) findViewById(R.id.detalle_restaurante_Carusel);
         //caruselAgregarBTN = (FloatingActionButton) findViewById(R.id.detalle_restaurante_carusel_BTN);
         calificacionRestauranteRB = (RatingBar) findViewById(R.id.detalle_restaurante_rating_bar);
@@ -465,4 +473,13 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
         });
 
     }
+
+    public void setMap(View view){
+        Intent intent = new Intent(this, SelectPlaceActivity.class);
+        intent.putExtra("lat",restaurant.getLatitude());
+        intent.putExtra("lng",restaurant.getLongitude());
+        intent.putExtra("fromDetalle",true);
+        startActivityForResult(intent,5);
+    }
+
 }
