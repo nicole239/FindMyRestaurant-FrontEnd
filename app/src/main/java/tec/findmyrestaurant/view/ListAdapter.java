@@ -6,11 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import tec.findmyrestaurant.R;
+import tec.findmyrestaurant.api.CalificationRequest;
+import tec.findmyrestaurant.api.Message;
+import tec.findmyrestaurant.api.Response;
+import tec.findmyrestaurant.model.Calification;
 import tec.findmyrestaurant.model.Restaurant;
 
 public class ListAdapter extends BaseAdapter {
@@ -52,9 +57,22 @@ public class ListAdapter extends BaseAdapter {
 
         TextView txtName =  vi.findViewById(R.id.txtItemtName);
         txtName.setText(data.get(i).getName());
+        final RatingBar rb = vi.findViewById(R.id.ratingBarItemDetail);
 
         TextView txtDetails = vi.findViewById(R.id.txtItemDetail);
         txtDetails.setText(data.get(i).getFoodType().getName());
+        CalificationRequest.getRestaurantCalification(vi.getContext(),data.get(i).getIdRestaurant(),new Response<Calification>(){
+            @Override
+            public void onSuccess(Calification objet) {
+                rb.setRating(objet.getCalification());
+            }
+
+            @Override
+            public void onFailure(Message message) {
+                super.onFailure(message);
+            }
+        });
+
         return vi;
     }
 }

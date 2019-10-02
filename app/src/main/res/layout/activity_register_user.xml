@@ -113,6 +113,7 @@
         android:layout_height="wrap_content"
         style="@style/button_style"
         android:text="Submit"
+        android:background="@drawable/button_background"
         android:layout_margin="16dp"
         android:onClick="submit"
         android:layout_centerHorizontal="true"
