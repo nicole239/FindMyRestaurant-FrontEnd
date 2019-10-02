@@ -214,6 +214,9 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                                 }
                             });
                         }
+                        else{
+                            refreshCalifications();
+                        }
                     }
                     else{
                         CalificationRequest.getRestaurantCalification(getApplicationContext(), restaurant.getIdRestaurant(), new Response<Calification>(){

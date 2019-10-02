@@ -31,6 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
+                    android:textStyle="bold"
                     android:text="Nombre del restaurante"
                     android:textSize="20sp"></TextView>
 
@@ -67,6 +68,7 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center_horizontal"
                         android:onClick="uploadImage"
+                        android:backgroundTint="@color/colorCafeClaro"
                         app:fabCustomSize="32dp"
                         android:src="@android:drawable/ic_input_add"
                         app:fabSize="mini"></com.google.android.material.floatingactionbutton.FloatingActionButton>
@@ -105,6 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:isIndicator="true"
+                        android:progressTint="@color/gold"
                         android:max="5"
                         android:numStars="5"
                         android:stepSize="0.1"></RatingBar>
@@ -256,7 +259,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="setMap"
-                        android:text="Abrir Ubicación"
+                        android:textColor="@color/blue_link"
+                        android:text="@string/ubicacion"
                         android:textSize="18sp"></TextView>
 
                 </LinearLayout>
@@ -284,7 +288,7 @@
                     android:id="@+id/detalle_restaurante_comentario_BTN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/button_border"
                     android:text="Enviar"></Button>
 
             </LinearLayout>

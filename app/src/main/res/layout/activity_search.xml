@@ -38,6 +38,7 @@
     <RatingBar
         android:id="@+id/searchCalification"
         android:layout_gravity="center"
+        android:progressTint="@color/gold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
