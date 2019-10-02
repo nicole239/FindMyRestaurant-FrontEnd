@@ -7,80 +7,90 @@
     android:layout_height="match_parent"
     tools:context=".view.SearchActivity">
 
-    <TextView
-        android:id="@+id/lblSearchLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mark your location:"
-        android:textSize="18sp" />
-
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapViewSearch"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/txtRadio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Radio en km"
-        android:inputType="number" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/txtSearchName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Restaurant Name"
-        android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/lblSearchLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mark your location:"
+                android:textSize="18sp" />
 
-    <RatingBar
-        android:id="@+id/searchCalification"
-        android:layout_gravity="center"
-        android:progressTint="@color/gold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapViewSearch"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
 
-    <TextView
-        android:id="@+id/lblSearchPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center_vertical"
-        android:text="@string/price"
-        android:textSize="14sp" />
+            <EditText
+                android:id="@+id/txtRadio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Radio en km"
+                android:inputType="number" />
 
-    <Spinner
-        android:id="@+id/spinnerPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dialog" />
+            <EditText
+                android:id="@+id/txtSearchName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Restaurant Name"
+                android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/lblSearchType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/type"
-        android:textSize="14sp" />
-    <Spinner
-        android:id="@+id/spinnerSearchFoodType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dialog"/>
+            <RatingBar
+                android:id="@+id/searchCalification"
+                android:layout_gravity="center"
+                android:progressTint="@color/gold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/btnSearch"
-        style="@style/button_style"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_background"
-        android:onClick="btnSearch_onClick"
-        android:text="Search"
-        android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/lblSearchPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:text="@string/price"
+                android:textSize="14sp" />
 
+            <Spinner
+                android:id="@+id/spinnerPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog" />
 
+            <TextView
+                android:id="@+id/lblSearchType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/type"
+                android:textSize="14sp" />
+            <Spinner
+                android:id="@+id/spinnerSearchFoodType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"/>
+
+            <Button
+                android:id="@+id/btnSearch"
+                style="@style/button_style"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_background"
+                android:onClick="btnSearch_onClick"
+                android:text="Search"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
