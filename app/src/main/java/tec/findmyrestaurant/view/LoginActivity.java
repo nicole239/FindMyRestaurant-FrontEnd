@@ -60,8 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setPermissions(Arrays.asList("email", "public_profile"));
 
         // Callback registration
-        /*
-        try { PackageInfo info = getPackageManager().getPackageInfo("tec.findmyrestaurant", PackageManager.GET_SIGNATURES);
+        /*try { PackageInfo info = getPackageManager().getPackageInfo("tec.findmyrestaurant", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
@@ -74,9 +73,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         catch (NoSuchAlgorithmException e) {
             Log.e("MYKEYHASH",e.toString());
-        }
+        }*/
 
-         */
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override

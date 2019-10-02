@@ -1,11 +1,13 @@
 package tec.findmyrestaurant.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 
@@ -52,6 +54,8 @@ public class SelectPlaceActivity extends AppCompatActivity implements OnMapReady
             LatLng latLng = new LatLng(lat,lng);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,17));
         }
+        mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
+        mMap.setOnMyLocationClickListener(onMyLocationClickListener);
 
     }
 
@@ -63,4 +67,22 @@ public class SelectPlaceActivity extends AppCompatActivity implements OnMapReady
         setResult(Activity.RESULT_OK,intent);
         finish();
     }
+
+
+    private GoogleMap.OnMyLocationButtonClickListener onMyLocationButtonClickListener =
+            new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    mMap.setMinZoomPreference(15);
+                    return false;
+                }
+            };
+
+    private GoogleMap.OnMyLocationClickListener onMyLocationClickListener =
+            new GoogleMap.OnMyLocationClickListener() {
+                @Override
+                public void onMyLocationClick(@NonNull Location location) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 16));
+                }
+            };
 }

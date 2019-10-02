@@ -151,6 +151,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
         mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         mMap.setOnMyLocationClickListener(onMyLocationClickListener);
+        mMap.setMyLocationEnabled(true);
         getPermissions();
         if (getActivity().getIntent().hasExtra(TabbedActivity.KEY_EXTRA)) {
             try {

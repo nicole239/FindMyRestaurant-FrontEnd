@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/comment_row_user_email_TV"
@@ -23,10 +23,9 @@
             android:id="@+id/comment_row_content_TV"
             android:layout_width="wrap_content"
             android:text="hola"
-            android:layout_marginLeft="20dp"
             android:textSize="16sp"
+            android:paddingStart="10dp"
             android:layout_height="wrap_content"></TextView>
-
     </LinearLayout>
 
 </LinearLayout>

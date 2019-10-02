@@ -75,7 +75,7 @@ public class AddRestaurantActivity extends AppCompatActivity implements PhotoAda
         spinnerPrice.setAdapter(adapterPrice);
 
         btnSubmit = findViewById(R.id.btnSubmit);
-        btnSubmit.setEnabled(false);
+        btnSubmit.setEnabled(true);
 
         lblAddSchedule = findViewById(R.id.lblAddSchedule);
         lblSchedule = findViewById(R.id.lblSchedule);
@@ -226,6 +226,11 @@ public class AddRestaurantActivity extends AppCompatActivity implements PhotoAda
         String name = txtName.getEditText().getText().toString();
         String phone = txtPhone.getEditText().getText().toString();
         String website = txtWebsite.getEditText().getText().toString();
+
+        if(name.isEmpty() || phone.isEmpty() || website.isEmpty()){
+            return;
+        }
+
 
         Restaurant restaurant = new Restaurant();
         restaurant.setName(name);
