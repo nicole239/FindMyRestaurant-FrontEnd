@@ -68,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:background="@drawable/button_background"
             android:onClick="btnLogin_Click"
             style="@style/button_style"
             android:text="Login" />
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:onClick="btnRegister_Click"
+            android:background="@drawable/button_background"
             style="@style/button_style"
             android:text="Sign up" />
 
