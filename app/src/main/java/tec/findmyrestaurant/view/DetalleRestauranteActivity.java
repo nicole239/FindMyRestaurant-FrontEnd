@@ -109,7 +109,7 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final TextView tv_close, tv_num;
                 RatingBar rb_cal;
-                Button calificar;
+                final Button calificar;
                 calificacionDialog.setContentView(R.layout.calificacion_popup);
                 tv_close = (TextView)calificacionDialog.findViewById(R.id.calificacion_popup_close_TV);
                 tv_num = (TextView)calificacionDialog.findViewById(R.id.calificacion_popup_number_TV);
@@ -129,6 +129,32 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                         Toast.makeText(DetalleRestauranteActivity.this, "num: "+v, Toast.LENGTH_SHORT).show();
                         numStars = v;
                         tv_num.setText(""+numStars);
+                    }
+                });
+
+                calificar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Calification calification = new Calification();
+                        calification.setCalification(numStars);
+                        calification.setIdRestaurant(restaurant.getIdRestaurant());
+                        User currentUser = SessionManager.getUser(getApplicationContext());
+                        calification.setUser(currentUser);
+                        CalificationRequest.insertCalification(getApplicationContext(),calification,new Response<Calification>(){
+                            @Override
+                            public void onSuccess(Message message) {
+                                Toast.makeText(getApplicationContext(),"Tu calificacion ha sido enviada!",Toast.LENGTH_LONG).show();
+                                calificarBtn.setEnabled(false);
+                                calificarBtn.setText("Ya has calificado este retaurante");
+                            }
+
+                            @Override
+                            public void onFailure(Message message) {
+                                Toast.makeText(getApplicationContext(),"Hubo un error al enviar tu calificacion",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        calificacionDialog.dismiss();
                     }
                 });
 
@@ -164,6 +190,7 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                         }
                         if(haveUser){
                             calificarBtn.setEnabled(false);
+                            calificarBtn.setText("Ya has calificado este retaurante");
                             CalificationRequest.getRestaurantCalification(getApplicationContext(), restaurant.getIdRestaurant(), new Response<Calification>(){
                                 @Override
                                 public void onSuccess(Calification objet) {
