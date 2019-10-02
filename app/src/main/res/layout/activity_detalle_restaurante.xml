@@ -46,6 +46,7 @@
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/detalle_restaurante_Carusel"
+                    android:layout_marginStart="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
@@ -57,14 +58,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:layout_gravity="center"
                     android:gravity="center">
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/detalle_restaurante_carusel_BTN"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="#f00"
-                    android:onClick="uploadImage"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/detalle_restaurante_carusel_BTN"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_horizontal"
+                        android:onClick="uploadImage"
+                        app:fabCustomSize="32dp"
+                        android:src="@android:drawable/ic_input_add"
+                        app:fabSize="mini"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+
                     <ProgressBar
                         android:id="@+id/progress_bar"
                         android:layout_width="wrap_content"
@@ -278,6 +284,7 @@
                     android:id="@+id/detalle_restaurante_comentario_BTN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button_background"
                     android:text="Enviar"></Button>
 
             </LinearLayout>

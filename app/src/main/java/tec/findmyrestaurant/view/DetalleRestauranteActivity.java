@@ -155,6 +155,7 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),"Tu calificacion ha sido enviada!",Toast.LENGTH_LONG).show();
                                 calificarBtn.setEnabled(false);
                                 calificarBtn.setText("Ya has calificado este retaurante");
+                                refreshCalifications();
                             }
 
                             @Override
@@ -422,6 +423,24 @@ public class DetalleRestauranteActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void refreshCalifications(){
+        CalificationRequest.getRestaurantCalification(getApplicationContext(), restaurant.getIdRestaurant(), new Response<Calification>(){
+            @Override
+            public void onSuccess(Calification objet) {
+                Log.d("Rating",""+objet.getCalification());
+                calificacionRestauranteRB.setRating(objet.getCalification());
+                calicacionValorTV.setText(""+ BigDecimal.valueOf(objet.getCalification()).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue());
+            }
+
+            @Override
+            public void onFailure(Message message) {
+                super.onFailure(message);
+            }
+        });
+        Log.d("Rating", "nada");
+    }
+
     private void upload(final Uri uri){
         PhotoRequest.getPhotoID(this,new Response(){
             @Override
