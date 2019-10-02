@@ -37,4 +37,13 @@
         android:gravity="bottom"
         android:layout_marginLeft="16sp"/>
 
+    <RatingBar
+        android:id="@+id/ratingBarItemDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:numStars="5"></RatingBar>
+
 </RelativeLayout>

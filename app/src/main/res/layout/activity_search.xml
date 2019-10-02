@@ -37,6 +37,7 @@
 
     <RatingBar
         android:id="@+id/searchCalification"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -75,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/button_background"
         android:onClick="btnSearch_onClick"
         android:text="Search"
         android:textColor="@android:color/white" />
